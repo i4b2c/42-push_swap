@@ -12,38 +12,41 @@ void colocar_numero(int *num)
 	}
 }
 
+void valor_numero(int *num, int ac, char **av)
+{
+	int i;
+	i = 0;
+	while(i+1 < ac)
+	{
+		num[i] = ft_atoi(av[i+1]);
+		i++;
+	}
+}
+
+void sa(int *num)
+{
+	int temp;
+
+	temp = num[0];
+	num[0] = num[1];
+	num[1] = temp;
+}
+
 int main(int ac, char **av)
 {
-	int *num;
-	int i;
-	int temp;
-	(void)av;
+	int *stack_a;
+	int *stack_b;
 
-	i = 0;
-	num = (int *)malloc(sizeof(int *) * ac + 1);
 	if(ac != 1)
 	{
-		while(i+1 < ac)
-		{
-			num[i] = ft_atoi(av[i+1]);
-			i++;
-		}
-		i = 0;
-		while(i+1 < ac)
-		{
-			if(num[i] > num[i+1] && i+2 < ac)
-			{
-				temp = num[i];
-				num[i] = num[i+1];
-				num[i+1] = temp;
-				i = -1;
-			}
-			//ft_printf("%d\n",num[i]);
-			i++;
-		}
-		colocar_numero(num);
-		free(num);
+		stack_a = (int *)malloc(sizeof(int *) * ac + 1);
+		stack_b = (int *)malloc(sizeof(int *) * ac + 1);
+		valor_numero(stack_a,ac,av);
+		if(stack_a[0] > stack_a[1])
+			sa(stack_a);
+		colocar_numero(stack_a);
+		free(stack_a);
+		free(stack_b);
 	}
-	//printf("\n");
 	return(0);
 }
