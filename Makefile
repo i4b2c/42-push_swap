@@ -73,3 +73,7 @@ re: extra all
 
 ez:
 		@$(CC) $(CFLAGS) push_swap.c libft.a $(LIBSRC) $(LIBFLAG) -o push_swap
+git:
+	git add *
+	git commit -m .
+	git push

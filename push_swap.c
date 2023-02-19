@@ -75,23 +75,13 @@ int tamanho_stack(t_stack *stack)
 	return (i);
 }
 
-void remover_lista(t_stack **stack, int num)
+void remover_primeiro(t_stack **stack)
 {
-	t_stack *temp;
-	temp = malloc(sizeof(t_stack));
-	temp = *stack;
-	if(temp->valor == num)
-		*stack = temp->next;
-	else
+	if(*stack != NULL)
 	{
-		while(temp->next != NULL)
-		{
-			if(temp->next->valor == num)
-				break;
-			temp = temp->next;
-		}
-		temp->next = temp->next->next;
-		temp->next->next = NULL;
+		t_stack *new = *stack;
+		*stack = (*stack)->next;
+		free(new);
 	}
 }
 
@@ -120,8 +110,6 @@ int verificar_organizado(t_stack *stack)
 
 void ft_sa(t_stack **stack)
 {
-	if(!((*stack)->next->valor) || !((*stack)->valor))
-		return;
 	int temp;
 	t_stack *new;
 	new = malloc(sizeof(t_stack));
@@ -136,6 +124,24 @@ int valor_do_ultimo(t_stack *stack)
 	while(stack->next != NULL)
 		stack = stack->next;
 	return(stack->valor);
+}
+
+void ft_ra(t_stack **stack)
+{
+	if(*stack == NULL || (*stack)->next == NULL)
+		return ;
+	t_stack *new;
+	t_stack *primeiro_no;
+
+	new = malloc(sizeof(t_stack));
+	primeiro_no = malloc(sizeof(t_stack));
+	new = *stack;
+	primeiro_no = new;
+	while(new->next != NULL)
+		new = new->next;
+	new->next = primeiro_no;
+	*stack = (*stack)->next;
+	primeiro_no->next = NULL;
 }
 
 void ft_rra(t_stack **stack)
@@ -163,20 +169,55 @@ void ft_rra(t_stack **stack)
 
 }
 
+void ft_pa(t_stack **stack_a, t_stack **stack_b)
+{
+	if(*stack_a == NULL)
+		return;
+	adicionar_inicio(stack_b,(*stack_a)->valor);
+	remover_primeiro(stack_a);
+	
+}
+
+
+void ft_pb(t_stack **stack_b, t_stack **stack_a)
+{
+	if(*stack_b == NULL)
+		return ;
+	adicionar_inicio(stack_a,(*stack_b)->valor);
+	remover_primeiro(stack_b);
+}
+
 void organizar(t_stack **stack_a, t_stack **stack_b)
 {
-	t_stack *new_a;
-	(void)stack_b;
-	//t_stack *new_b;
-	new_a = malloc(sizeof(t_stack));
-	//new_b = malloc(sizeof(t_stack));
-	new_a = *stack_a;
-	if(new_a->valor > new_a->next->valor)
+	if(valor_do_ultimo(*stack_a) < (*stack_a)->valor)
+	{
+		if((*stack_a)->valor < (*stack_a)->next->valor)
+		{
+			ft_rra(stack_a);
+			ft_printf("rra\n");
+		}
+		else
+		{
+			ft_ra(stack_a);
+			ft_printf("ra\n");
+		}
+	}
+	else if((*stack_a)->valor > (*stack_a)->next->valor)
+	{
 		ft_sa(stack_a);
-	//if((verificar_organizado(*stack_a)) == 1 && new_a->valor < new_a->next->valor)
-	else if(valor_do_ultimo(new_a) < new_a->valor)
-		ft_rra(stack_a);
-
+		ft_printf("sa\n");
+	}
+	else if(verificar_organizado(*stack_a) == 1 && (*stack_a)->valor < (*stack_a)->next->valor)
+	{
+		ft_pa(stack_a,stack_b);
+		ft_printf("pb\n");
+	}
+	//ver isso melhor !!!
+	else
+	{
+		ft_pa(stack_b,stack_a);
+		ft_printf("pa\n");
+	}
 }
 
 void organizar_stacks(t_stack **stack_a, t_stack **stack_b)
@@ -202,6 +243,8 @@ int main(int ac, char **av)
 		dar_valor_a(&stack_a,av);
 		organizar_stacks(&stack_a,&stack_b);
 	}
+	ft_printf("\nstack_a:\n");
 	printar_struct(stack_a);
+	ft_printf("stack_b:\n");
 	printar_struct(stack_b);
 }
