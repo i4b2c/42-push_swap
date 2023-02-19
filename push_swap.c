@@ -1,188 +1,207 @@
 #include "push_swap.h"
 
-void colocar_numero(int *num,int len)
+void adicionar_inicio(t_stack **stack, int valor)
 {
-	int i;
-	int c;
-	len--;
+	t_stack *novo;
+	novo = malloc(sizeof(t_stack));
+	novo->valor = valor;
+	novo->next = *stack;
+	*stack = novo;
+}
 
-	c = len-1;
-	i = 0;
-	while(c >= 0)
+void adicionar_fim(t_stack **stack, int valor)
+{
+	t_stack *novo;
+	t_stack *temp;
+	novo = malloc(sizeof(t_stack));
+	temp = malloc(sizeof(t_stack));
+	novo->valor = valor;
+	novo->next = NULL;
+	if(*stack == NULL)
+		*stack = novo;
+	else
 	{
-		ft_printf("%d\n",num[i]);
-		i++;
-		c--;
+		temp = *stack;
+		while (temp->next != NULL)
+			temp = temp->next;
+		temp->next = novo;
 	}
 }
 
-void iniciar_stack_b(int *stack_b, int len)
+void adicionar_meio(t_stack **stack, int valor, int ref)
 {
-	int i;
-
-	i = 0;
-	while(i < len)
+	t_stack *novo;
+	t_stack *temp;
+	novo = malloc(sizeof(t_stack));
+	temp = malloc(sizeof(t_stack));
+	if(!novo)
+		return ;
+	temp = *stack;
+	novo->valor = valor;
+	if(*stack == NULL)
 	{
-		stack_b[i] = 0;
-		i++;
+		*stack = novo;
+		novo->next = NULL;
 	}
+	while(temp->valor != ref && temp->next != NULL)
+		temp = temp->next;
+	novo->next = temp->next;
+	temp->next = novo;
 }
 
-void valor_numero(int *num, int ac, char **av)
+void printar_struct(t_stack *stack)
 {
-	int i;
-	i = 0;
-	while(i < ac)
+	if(stack != NULL)
 	{
-		num[i] = ft_atoi(av[i+1]);
-		i++;
-	}
-}
-
-void sa(int *stack_a)
-{
-	int temp;
-
-	temp = stack_a[0];
-	stack_a[0] = stack_a[1];
-	stack_a[1] = temp;
-}
-
-void sb(int *stack_b)
-{
-	int temp;
-
-	temp = stack_b[0];
-	stack_b[0] = stack_b[1];
-	stack_b[1] = temp;
-}
-
-void ss(int *stack_a,int *stack_b)
-{
-	sa(stack_a);
-	sb(stack_b);
-}
-
-void avancar(int *stack,int len)
-{
-	int i;
-	i = 0;
-	while(i < len-1)
-	{
-		stack[i] = stack[i+1];
-		i++;
-	}
-	stack[i] = 0;
-}
-
-void r_avancar(int *stack,int len)
-{
-	int i;
-	i = len-1;
-	while(i > 0)
-	{
-		stack[i] = stack[i-1];
-		i--;
-	}
-	stack[0] = 0;
-}
-
-void pa(int *stack_a,int*stack_b,int len)
-{
-	if(stack_b[0])
-	{
-		r_avancar(stack_a,len);
-		stack_a[0] = stack_b[0];
-	}
-	avancar(stack_b,len);
-}
-
-void pb(int *stack_a,int*stack_b,int len)
-{
-	if(stack_a[0])
-	{
-		r_avancar(stack_b,len);
-		stack_b[0] = stack_a[0];
-	}
-	avancar(stack_a,len);
-}
-
-void ra(int *stack_a,int len)
-{
-	int temp;
-	int i;
-
-	i = 0;
-	temp = stack_a[0];
-	while(i<len-1)
-	{
-		stack_a[i] = stack_a[i+1];
-		i++;
-	}
-	stack_a[i] = temp;
-}
-
-void rra(int *stack_a,int len)
-{
-	int temp;
-	int i;
-	temp = stack_a[len-1];
-	i = len-1;
-	while(i > 0)
-	{
-		stack_a[i] = stack_a[i-1];
-		i--;
-	}
-	stack_a[i] = temp;
-}
-
-int organizar_numero(int *stack_a, int *stack_b, int ac)
-{
-	int i;
-	int n;
-	(void)stack_b;
-	(void)ac;
-	n = 0;
-	i = 0;
-	while(stack_a[i])
-	{
-		if(stack_a[0] > stack_a[1])
+		while(stack->next != NULL)
 		{
-			sa(stack_a);
-			n++;
+			printf("%d\n",stack->valor);
+			stack = stack->next;
 		}
-		i++;
+		printf("%d\n",stack->valor);
 	}
-	return (n);
 }
 
-void colocar_stacks(int *stack_a,int *stack_b, int ac)
+int tamanho_stack(t_stack *stack)
 {
-	printf("\nStack A:\n\n");
-	colocar_numero(stack_a,ac);
-	printf("\nStack B:\n\n");
-	colocar_numero(stack_b,ac);
-	printf("\n");
+	int i;
+
+	i = 0;
+	while(stack != NULL)
+	{
+		stack = stack->next;
+		i++;
+	}
+	return (i);
+}
+
+void remover_lista(t_stack **stack, int num)
+{
+	t_stack *temp;
+	temp = malloc(sizeof(t_stack));
+	temp = *stack;
+	if(temp->valor == num)
+		*stack = temp->next;
+	else
+	{
+		while(temp->next != NULL)
+		{
+			if(temp->next->valor == num)
+				break;
+			temp = temp->next;
+		}
+		temp->next = temp->next->next;
+		temp->next->next = NULL;
+	}
+}
+
+void dar_valor_a(t_stack **stack,char **av)
+{
+	int i;
+
+	i = 1;
+	while(av[i] != NULL)
+	{
+		adicionar_fim(stack,ft_atoi(av[i]));
+		i++;
+	}
+}
+
+int verificar_organizado(t_stack *stack)
+{
+	while(stack->next != NULL)
+	{
+		if(stack->valor >= stack->next->valor)
+			return 1;
+		stack = stack->next;
+	}
+	return (0);
+}
+
+void ft_sa(t_stack **stack)
+{
+	if(!((*stack)->next->valor) || !((*stack)->valor))
+		return;
+	int temp;
+	t_stack *new;
+	new = malloc(sizeof(t_stack));
+	new = *stack;
+	temp = new->valor;
+	new->valor = new->next->valor;
+	new->next->valor = temp;
+}
+
+int valor_do_ultimo(t_stack *stack)
+{
+	while(stack->next != NULL)
+		stack = stack->next;
+	return(stack->valor);
+}
+
+void ft_rra(t_stack **stack)
+{
+	if(*stack == NULL || (*stack)->next == NULL)
+		return;
+	t_stack *new;
+	t_stack *ultimo_no;
+	t_stack *penultimo_no;
+
+	new = malloc(sizeof(t_stack));
+	ultimo_no = malloc(sizeof(t_stack));
+	penultimo_no = malloc(sizeof(t_stack));
+	new = *stack;
+	while(new->next != NULL)
+	{
+		if(new->next != NULL && new->next->next == NULL)
+			penultimo_no = new;
+		new = new->next;
+	}
+	ultimo_no = new;
+	penultimo_no->next = NULL;
+	ultimo_no->next = *stack;
+	*stack = ultimo_no;
+
+}
+
+void organizar(t_stack **stack_a, t_stack **stack_b)
+{
+	t_stack *new_a;
+	(void)stack_b;
+	//t_stack *new_b;
+	new_a = malloc(sizeof(t_stack));
+	//new_b = malloc(sizeof(t_stack));
+	new_a = *stack_a;
+	if(new_a->valor > new_a->next->valor)
+		ft_sa(stack_a);
+	//if((verificar_organizado(*stack_a)) == 1 && new_a->valor < new_a->next->valor)
+	else if(valor_do_ultimo(new_a) < new_a->valor)
+		ft_rra(stack_a);
+
+}
+
+void organizar_stacks(t_stack **stack_a, t_stack **stack_b)
+{
+	while(1)
+	{
+		if((verificar_organizado(*stack_a)) == 0)
+			break;
+		else
+			organizar(stack_a,stack_b);
+	}
 }
 
 int main(int ac, char **av)
 {
-	int *stack_a;
-	int *stack_b;
-	int len_org;
+	t_stack *stack_a;
+	t_stack *stack_b;
 
-	len_org = 0;
+	stack_a = NULL;
+	stack_b = NULL;
 	if(ac != 1)
 	{
-		stack_a = (int *)malloc(sizeof(int *) * ac + 1);
-		stack_b = (int *)malloc(sizeof(int *) * ac + 1);
-		valor_numero(stack_a,ac-1,av);
-		iniciar_stack_b(stack_b,ac-1);
-		//len_org = organizar_numero(stack_a,stack_b,ac-1);
-		colocar_stacks(stack_a,stack_b,ac);
-		free(stack_a);
-		free(stack_b);
-		ft_printf("quantidade : %d\n",len_org);
+		dar_valor_a(&stack_a,av);
+		organizar_stacks(&stack_a,&stack_b);
 	}
-	return(0);
+	printar_struct(stack_a);
+	printar_struct(stack_b);
 }
