@@ -212,11 +212,33 @@ void organizar(t_stack **stack_a, t_stack **stack_b)
 		ft_pa(stack_a,stack_b);
 		ft_printf("pb\n");
 	}
-	//ver isso melhor !!!
-	else
+	else if(verificar_organizado(*stack_a) == 0)
 	{
 		ft_pa(stack_b,stack_a);
 		ft_printf("pa\n");
+	}
+	//agora na parte do B
+	if(*stack_b && (*stack_b)->next)
+	{
+		if(valor_do_ultimo(*stack_b) > (*stack_b)->valor)
+		{
+			if((*stack_b)->valor < (*stack_b)->next->valor)
+			{
+				ft_rra(stack_b);
+				ft_printf("rra\n");
+			}
+			else
+			{
+				ft_ra(stack_b);
+				ft_printf("ra\n");
+			}
+			
+		}
+		else if((*stack_b)->valor < (*stack_b)->next->valor)
+		{
+			ft_sa(stack_b);
+			ft_printf("sb\n");
+		}
 	}
 }
 
@@ -229,13 +251,18 @@ int verificar_stack_b(t_stack *stack)
 
 void organizar_stacks(t_stack **stack_a, t_stack **stack_b)
 {
+	int i;
+
+	i = 0;
 	while(1)
 	{
 		if((verificar_organizado(*stack_a)) == 0 && verificar_stack_b(*stack_b) == 0)
 			break;
 		else
 			organizar(stack_a,stack_b);
+		i++;
 	}
+	printf("organizou em %d passos\n\n",i);
 }
 
 int main(int ac, char **av)
