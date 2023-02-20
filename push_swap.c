@@ -220,11 +220,18 @@ void organizar(t_stack **stack_a, t_stack **stack_b)
 	}
 }
 
+int verificar_stack_b(t_stack *stack)
+{
+	if(stack == NULL)
+		return 0;
+	return 1;
+}
+
 void organizar_stacks(t_stack **stack_a, t_stack **stack_b)
 {
 	while(1)
 	{
-		if((verificar_organizado(*stack_a)) == 0)
+		if((verificar_organizado(*stack_a)) == 0 && verificar_stack_b(*stack_b) == 0)
 			break;
 		else
 			organizar(stack_a,stack_b);
