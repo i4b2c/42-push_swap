@@ -187,59 +187,73 @@ void ft_pb(t_stack **stack_b, t_stack **stack_a)
 	remover_primeiro(stack_b);
 }
 
-void organizar(t_stack **stack_a, t_stack **stack_b)
+int organizar(t_stack **stack_a, t_stack **stack_b)
 {
+	int i;
+
+	i = 0;
+	if((*stack_a)->valor > (*stack_a)->next->valor)// && valor_do_ultimo(*stack_a) > (*stack_a)->valor)
+	{
+		ft_sa(stack_a);
+		ft_printf("sa\n");
+		i++;
+	}
 	if(valor_do_ultimo(*stack_a) < (*stack_a)->valor)
 	{
 		if((*stack_a)->valor < (*stack_a)->next->valor)
 		{
 			ft_rra(stack_a);
 			ft_printf("rra\n");
+			i++;
 		}
 		else
 		{
 			ft_ra(stack_a);
 			ft_printf("ra\n");
+			i++;
 		}
 	}
-	else if((*stack_a)->valor > (*stack_a)->next->valor)
-	{
-		ft_sa(stack_a);
-		ft_printf("sa\n");
-	}
-	else if(verificar_organizado(*stack_a) == 1 && (*stack_a)->valor < (*stack_a)->next->valor)
+	if(verificar_organizado(*stack_a) == 1)
 	{
 		ft_pa(stack_a,stack_b);
 		ft_printf("pb\n");
+		i++;
 	}
-	else if(verificar_organizado(*stack_a) == 0)
+	else
 	{
 		ft_pa(stack_b,stack_a);
 		ft_printf("pa\n");
+		i++;
 	}
+
 	//agora na parte do B
+	//depois tentar juntar ? para comecar a usar o ss por exemplo
 	if(*stack_b && (*stack_b)->next)
 	{
-		if(valor_do_ultimo(*stack_b) > (*stack_b)->valor)
+		if((*stack_b)->valor < (*stack_b)->next->valor)
 		{
-			if((*stack_b)->valor < (*stack_b)->next->valor)
+			ft_sa(stack_b);
+			ft_printf("sb\n");
+			i++;
+		}
+		else if(valor_do_ultimo(*stack_b) > (*stack_b)->valor)
+		{
+			if((*stack_b)->valor > (*stack_b)->next->valor)
 			{
 				ft_rra(stack_b);
-				ft_printf("rra\n");
+				ft_printf("rrb\n");
+				i++;
 			}
 			else
 			{
 				ft_ra(stack_b);
-				ft_printf("ra\n");
+				ft_printf("rb\n");
+				i++;
 			}
 			
 		}
-		else if((*stack_b)->valor < (*stack_b)->next->valor)
-		{
-			ft_sa(stack_b);
-			ft_printf("sb\n");
-		}
 	}
+	return(i);
 }
 
 int verificar_stack_b(t_stack *stack)
@@ -259,8 +273,7 @@ void organizar_stacks(t_stack **stack_a, t_stack **stack_b)
 		if((verificar_organizado(*stack_a)) == 0 && verificar_stack_b(*stack_b) == 0)
 			break;
 		else
-			organizar(stack_a,stack_b);
-		i++;
+			i += organizar(stack_a,stack_b);
 	}
 	printf("organizou em %d passos\n\n",i);
 }
@@ -277,8 +290,8 @@ int main(int ac, char **av)
 		dar_valor_a(&stack_a,av);
 		organizar_stacks(&stack_a,&stack_b);
 	}
-	ft_printf("\nstack_a:\n");
+	/*ft_printf("\nstack_a:\n");
 	printar_struct(stack_a);
 	ft_printf("stack_b:\n");
-	printar_struct(stack_b);
+	printar_struct(stack_b);*/
 }
