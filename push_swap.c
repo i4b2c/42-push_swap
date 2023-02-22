@@ -213,7 +213,7 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 			i++;
 		}
 	}
-	if(verificar_organizado(*stack_a) == 1)
+	else if(verificar_organizado(*stack_a) == 1)
 	{
 		ft_pa(stack_a,stack_b);
 		ft_printf("pb\n");
@@ -252,6 +252,7 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 			}
 			
 		}
+
 	}
 	return(i);
 }
