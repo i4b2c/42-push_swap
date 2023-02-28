@@ -175,7 +175,7 @@ void ft_pa(t_stack **stack_a, t_stack **stack_b)
 		return;
 	adicionar_inicio(stack_b,(*stack_a)->valor);
 	remover_primeiro(stack_a);
-	
+
 }
 
 
@@ -192,13 +192,33 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 	int i;
 
 	i = 0;
-	if((*stack_a)->valor > (*stack_a)->next->valor)// && valor_do_ultimo(*stack_a) > (*stack_a)->valor)
+	if((*stack_a)->valor > (*stack_a)->next->valor
+	|| valor_do_ultimo(*stack_a) < (*stack_a)->next->valor)// && valor_do_ultimo(*stack_a) > (*stack_a)->valor)
 	{
-		ft_sa(stack_a);
-		ft_printf("sa\n");
-		i++;
+		if((*stack_a)->valor > (*stack_a)->next->valor
+			&& valor_do_ultimo(*stack_a) > (*stack_a)->valor)
+		{
+			ft_sa(stack_a);
+			ft_printf("sa\n");
+			i++;
+		}
+		else
+		{
+			if((*stack_a)->valor < (*stack_a)->next->valor)
+			{
+				ft_rra(stack_a);
+				ft_printf("rra\n");
+				i++;
+			}
+			else
+			{
+				ft_ra(stack_a);
+				ft_printf("ra\n");
+				i++;
+			}
+		}
 	}
-	if(valor_do_ultimo(*stack_a) < (*stack_a)->valor)
+	else if(valor_do_ultimo(*stack_a) < (*stack_a)->valor)
 	{
 		if((*stack_a)->valor < (*stack_a)->next->valor)
 		{
@@ -221,8 +241,8 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 	}
 	else
 	{
-		ft_pa(stack_b,stack_a);
-		ft_printf("pa\n");
+		ft_ra(stack_b);
+		ft_printf("rb\n");
 		i++;
 	}
 
@@ -244,13 +264,12 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 				ft_printf("rrb\n");
 				i++;
 			}
-			else
-			{
-				ft_ra(stack_b);
-				ft_printf("rb\n");
-				i++;
-			}
-			
+		}
+		else if(verificar_organizado(*stack_b) == 1)
+		{
+			ft_pa(stack_b,stack_a);
+			ft_printf("pa\n");
+			i++;
 		}
 
 	}
