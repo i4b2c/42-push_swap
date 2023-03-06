@@ -202,20 +202,17 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 			ft_printf("sa\n");
 			i++;
 		}
-		else
+		else if ((*stack_a)->next->valor > valor_do_ultimo(*stack_a))
 		{
-			if((*stack_a)->valor < (*stack_a)->next->valor)
-			{
-				ft_rra(stack_a);
-				ft_printf("rra\n");
-				i++;
-			}
-			else
-			{
-				ft_ra(stack_a);
-				ft_printf("ra\n");
-				i++;
-			}
+			ft_rra(stack_a);
+			ft_printf("rra\n");
+			i++;
+		}
+		else if((*stack_a)->next->valor < valor_do_ultimo(*stack_a))
+		{
+			ft_ra(stack_a);
+			ft_printf("ra\n");
+			i++;
 		}
 	}
 	else if(valor_do_ultimo(*stack_a) < (*stack_a)->valor)
@@ -241,8 +238,8 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 	}
 	else
 	{
-		ft_ra(stack_b);
-		ft_printf("rb\n");
+		ft_pa(stack_b,stack_a);
+		ft_printf("pa\n");
 		i++;
 	}
 
@@ -264,12 +261,6 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 				ft_printf("rrb\n");
 				i++;
 			}
-		}
-		else if(verificar_organizado(*stack_b) == 1)
-		{
-			ft_pa(stack_b,stack_a);
-			ft_printf("pa\n");
-			i++;
 		}
 
 	}
