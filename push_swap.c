@@ -192,9 +192,9 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 	int i;
 
 	i = 0;
-	if((*stack_a)->valor > (*stack_a)->next->valor
-		&& ((valor_do_ultimo(*stack_a) > (*stack_a)->valor
-			|| valor_do_ultimo(*stack_a) < (*stack_a)->next->valor)))
+	if((*stack_a)->valor > (*stack_a)->next->valor) //se tirar os comentarios a logica dos 3 funciona mas dos 5 falha
+		//&& ((valor_do_ultimo(*stack_a) > (*stack_a)->valor
+		//	|| valor_do_ultimo(*stack_a) < (*stack_a)->next->valor)))
 	{
 		ft_sa(stack_a);
 		ft_printf("sa\n");
