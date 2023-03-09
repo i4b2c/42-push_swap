@@ -198,7 +198,9 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 		ft_printf("sa\n");
 		i++;
 	}
-	if(valor_do_ultimo(*stack_a) < (*stack_a)->valor)
+	else if(valor_do_ultimo(*stack_a) < (*stack_a)->valor
+		|| (valor_do_ultimo(*stack_a) > (*stack_a)->valor
+			&& valor_do_ultimo(*stack_a) < (*stack_a)->next->valor))
 	{
 		if((*stack_a)->valor < (*stack_a)->next->valor)
 		{
