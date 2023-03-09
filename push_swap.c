@@ -175,7 +175,7 @@ void ft_pa(t_stack **stack_a, t_stack **stack_b)
 		return;
 	adicionar_inicio(stack_b,(*stack_a)->valor);
 	remover_primeiro(stack_a);
-	
+
 }
 
 
@@ -192,25 +192,29 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 	int i;
 
 	i = 0;
-	if((*stack_a)->valor > (*stack_a)->next->valor) //se tirar os comentarios a logica dos 3 funciona mas dos 5 falha
-		//&& ((valor_do_ultimo(*stack_a) > (*stack_a)->valor
-		//	|| valor_do_ultimo(*stack_a) < (*stack_a)->next->valor)))
+	if((*stack_a)->valor > (*stack_a)->next->valor //se tirar os comentarios a logica dos 3 funciona mas dos 5 falha
+		&& ((valor_do_ultimo(*stack_a) > (*stack_a)->valor
+			|| valor_do_ultimo(*stack_a) < (*stack_a)->next->valor)))
+		//preciso arrumar logica para rra e ra , eu acho
 	{
 		ft_sa(stack_a);
 		ft_printf("sa\n");
 		i++;
 	}
-	else if(valor_do_ultimo(*stack_a) < (*stack_a)->valor
-		|| (valor_do_ultimo(*stack_a) > (*stack_a)->valor
-			&& valor_do_ultimo(*stack_a) < (*stack_a)->next->valor))
+	else if(valor_do_ultimo(*stack_a) < (*stack_a)->valor)
+		//|| (valor_do_ultimo(*stack_a) > (*stack_a)->valor
+		//	&& valor_do_ultimo(*stack_a) < (*stack_a)->next->valor))
 	{
-		if((*stack_a)->valor < (*stack_a)->next->valor)
+		if((*stack_a)->valor > valor_do_ultimo(*stack_a)//antes tava ((*stack_a)->valor < (*stack_a)->next->valor)
+														//e o if de cima tava descomentado , ainda n sei como resolver o problema dos rr
+			&& (*stack_a)->next->valor > valor_do_ultimo(*stack_a))
 		{
 			ft_rra(stack_a);
 			ft_printf("rra\n");
 			i++;
 		}
-		else
+		else if((*stack_a)->valor > valor_do_ultimo(*stack_a)
+			&& (*stack_a)->next->valor < valor_do_ultimo(*stack_a))
 		{
 			ft_ra(stack_a);
 			ft_printf("ra\n");
@@ -254,9 +258,9 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 				ft_printf("rb\n");
 				i++;
 			}
-			
+
 		}
-		/*else
+		/*else if(verificar_organizado(*stack_b) == 1)
 		{
 			ft_pa(stack_b,stack_a);
 			ft_printf("pa\n");
