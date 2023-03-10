@@ -192,29 +192,23 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 	int i;
 
 	i = 0;
-	if((*stack_a)->valor > (*stack_a)->next->valor //se tirar os comentarios a logica dos 3 funciona mas dos 5 falha
+	if((*stack_a)->valor > (*stack_a)->next->valor
 		&& ((valor_do_ultimo(*stack_a) > (*stack_a)->valor
 			|| valor_do_ultimo(*stack_a) < (*stack_a)->next->valor)))
-		//preciso arrumar logica para rra e ra , eu acho
 	{
 		ft_sa(stack_a);
 		ft_printf("sa\n");
 		i++;
 	}
-	else if(valor_do_ultimo(*stack_a) < (*stack_a)->valor)
-		//|| (valor_do_ultimo(*stack_a) > (*stack_a)->valor
-		//	&& valor_do_ultimo(*stack_a) < (*stack_a)->next->valor))
+	else if((valor_do_ultimo(*stack_a) < (*stack_a)->valor))
 	{
-		if((*stack_a)->valor > valor_do_ultimo(*stack_a)//antes tava ((*stack_a)->valor < (*stack_a)->next->valor)
-														//e o if de cima tava descomentado , ainda n sei como resolver o problema dos rr
-			&& (*stack_a)->next->valor > valor_do_ultimo(*stack_a))
+		if((*stack_a)->valor < (*stack_a)->next->valor)
 		{
 			ft_rra(stack_a);
 			ft_printf("rra\n");
 			i++;
 		}
-		else if((*stack_a)->valor > valor_do_ultimo(*stack_a)
-			&& (*stack_a)->next->valor < valor_do_ultimo(*stack_a))
+		else
 		{
 			ft_ra(stack_a);
 			ft_printf("ra\n");
@@ -233,9 +227,6 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 		ft_printf("pa\n");
 		i++;
 	}
-
-	//agora na parte do B
-	//depois tentar juntar ? para comecar a usar o ss por exemplo
 	if(*stack_b && (*stack_b)->next)
 	{
 		if((*stack_b)->valor < (*stack_b)->next->valor)
@@ -260,13 +251,6 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 			}
 
 		}
-		/*else if(verificar_organizado(*stack_b) == 1)
-		{
-			ft_pa(stack_b,stack_a);
-			ft_printf("pa\n");
-			i++;
-		}*/
-
 	}
 	return(i);
 }
@@ -305,8 +289,4 @@ int main(int ac, char **av)
 		dar_valor_a(&stack_a,av);
 		organizar_stacks(&stack_a,&stack_b);
 	}
-	/*ft_printf("\nstack_a:\n");
-	printar_struct(stack_a);
-	ft_printf("stack_b:\n");
-	printar_struct(stack_b);*/
 }
