@@ -382,7 +382,7 @@ void organizar_stacks(t_stack **stack_a, t_stack **stack_b)
 	}
 	printf("organizou em %d passos\n",i);
 }
-
+/*
 int main(int ac, char **av)
 {
 	t_stack *stack_a;
@@ -395,9 +395,125 @@ int main(int ac, char **av)
 		dar_valor_a(&stack_a,av);
 		if(ac == 4)
 			organizar_stack_3(&stack_a);
-		else if(ac == 5 || ac == 6)
-			organizar_stack_5(&stack_a,&stack_b);
+		//else if(ac == 5 || ac == 6)
+			//organizar_stack_5(&stack_a,&stack_b);
 		else
 			organizar_stacks(&stack_a,&stack_b);
 	}
+}*/
+
+
+
+
+void ft_raiz(int *raiz,int ac)
+{
+	int i;
+	i = 0;
+	while(1)
+	{
+		if(i * i >= ac)
+		{
+			*raiz = i;
+			return ;
+		}
+		i++;
+	}
+}
+/*
+void converter_stack(t_stack **stack,int ac)
+{
+	int i;
+	i = 0;
+	while(i <= ac)
+	{
+		while(stack->next)
+		i++;
+	}
+}*/
+
+void dividir_stacks_maior(t_stack **stack,int ac)
+{
+	(void)stack;
+	int raiz;
+	//ac = 500;
+	double stack_dividido;
+	double num_elementos;
+	ft_raiz(&raiz,ac);
+	printf("raiz:%d\n",raiz);
+	stack_dividido = ac/(raiz+(raiz/4));
+	num_elementos = ac/stack_dividido;
+	printf("stack vai ser dividido em:%d\n",(int)stack_dividido);
+	printf("num de elementos:%f\n",num_elementos);
+}
+
+void get_stack(t_len *len,int ac)
+{
+	int raiz;
+	int raiz3;
+	ft_raiz(&raiz,ac);
+	ft_raiz(&raiz3,raiz);
+	len->raiz = raiz;
+	len->divisao_stack = ac/(raiz+raiz3);
+	len->elementos_stack = ac/len->divisao_stack;
+}
+
+void criar(t_geral **geral,t_stack *stack, t_len len)
+{
+	int i;
+	int x;
+	int j;
+	x = 0;
+	i = 0;
+	while(i < len.divisao_stack)
+	{
+		if(i+1 == len.divisao_stack)
+			(*geral)->arm = malloc(sizeof(t_stack) * (len.ac - (x*len.elementos_stack)));
+		(*geral)->arm = malloc(sizeof(t_stack) * len.elementos_stack);
+		j = len.elementos_stack;
+		while(j > 0)
+		{
+			(*geral)->arm->valor = stack->valor;
+			(*geral) = (*geral)->next;
+			stack = stack->next;
+			j--;
+		}
+		x++;
+		i++;
+	}
+}
+
+void criar_geral(t_geral **geral,t_stack *stack, t_len len)
+{
+	t_geral *temp;
+	temp = *geral;
+	while(temp->next != NULL)
+		temp = temp->next;
+	if(temp != NULL)
+		temp = temp->next;
+	criar(&temp,stack,len);
+}
+
+int main(int ac, char **av)
+{
+	t_stack *stack_a;
+	t_stack *stack_b;
+	t_geral *geral;
+	t_len len;
+
+	geral = NULL;
+	stack_a = NULL;
+	stack_b = NULL;
+	(void)stack_b;
+	if(ac != 1)
+	{
+		get_stack(&len,ac);
+		len.ac = ac;
+		dar_valor_a(&stack_a,av);
+		criar_geral(&geral,stack_a,len);
+		if(ac >= 10)
+			dividir_stacks_maior(&stack_a,ac-1);
+		else if(ac >= 7 && ac <= 9)
+			dividir_stacks_maior(&stack_a,ac-1);
+	}
+	return 0;
 }
