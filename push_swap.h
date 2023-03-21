@@ -9,15 +9,9 @@ typedef struct d_stack
 	struct d_stack *next;
 }	t_stack;
 
-typedef struct d_arm
-{
-	int valor;
-	struct d_arm *next;
-}	t_arm;
-
 typedef struct d_geral
 {
-	t_arm *arm;
+	t_stack *stack;
 	struct d_geral *next;
 }	t_geral;
 
@@ -32,5 +26,9 @@ typedef struct d_len
 }	t_len;
 
 void dar_valor_a(t_stack **stack , char **av);
+void printar_struct(t_stack *stack);
+void adicionar_inicio(t_stack **stack, int valor);
+void adicionar_fim(t_stack **stack, int valor);
+void get_stack(t_len *len,int ac);
 
 #endif

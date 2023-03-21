@@ -409,6 +409,7 @@ void ft_raiz(int *raiz,int ac)
 {
 	int i;
 	i = 0;
+	ac--;
 	while(1)
 	{
 		if(i * i >= ac)
@@ -457,47 +458,12 @@ void get_stack(t_len *len,int ac)
 	len->elementos_stack = ac/len->divisao_stack;
 }
 
-void criar(t_geral **geral,t_stack *stack, t_len len)
-{
-	int i;
-	int x;
-	int j;
-	x = 0;
-	i = 0;
-	while(i < len.divisao_stack)
-	{
-		if(i+1 == len.divisao_stack)
-			(*geral)->arm = malloc(sizeof(t_stack) * (len.ac - (x*len.elementos_stack)));
-		(*geral)->arm = malloc(sizeof(t_stack) * len.elementos_stack);
-		j = len.elementos_stack;
-		while(j > 0)
-		{
-			(*geral)->arm->valor = stack->valor;
-			(*geral) = (*geral)->next;
-			stack = stack->next;
-			j--;
-		}
-		x++;
-		i++;
-	}
-}
-
-void criar_geral(t_geral **geral,t_stack *stack, t_len len)
-{
-	t_geral *temp;
-	temp = *geral;
-	while(temp->next != NULL)
-		temp = temp->next;
-	if(temp != NULL)
-		temp = temp->next;
-	criar(&temp,stack,len);
-}
-
 //entao tenho que fazer oq ? crio uma funcao que copie o stack_a , depois disso tem que 
 //encontrar o valor minimo e mandar para a nova stack ,x -> elementos_stacks
 //x divisao_stacks assim fica dividido por **stack em ordem , agora na stack principal
 //tem que verificar se (*stack_a)->valor tem na geral->arm, se tiver da pb no valor 
 //se nao tiver so da rra , isso vai ser a primeira parte do programa.
+/*
 int main(int ac, char **av)
 {
 	t_stack *stack_a;
@@ -511,14 +477,15 @@ int main(int ac, char **av)
 	(void)stack_b;
 	if(ac != 1)
 	{
-		get_stack(&len,ac);
+		get_stack(&len,ac-1);
 		len.ac = ac;
 		dar_valor_a(&stack_a,av);
 		criar_geral(&geral,stack_a,len);
+		//(ac >= 10) ? dividir_stacks_maior(&stack_a,ac-1) : dividir_stacks_maior(&stack_a,ac-1);
 		if(ac >= 10)
 			dividir_stacks_maior(&stack_a,ac-1);
 		else if(ac >= 7 && ac <= 9)
 			dividir_stacks_maior(&stack_a,ac-1);
 	}
 	return 0;
-}
+}*/
