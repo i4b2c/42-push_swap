@@ -493,6 +493,11 @@ void criar_geral(t_geral **geral,t_stack *stack, t_len len)
 	criar(&temp,stack,len);
 }
 
+//entao tenho que fazer oq ? crio uma funcao que copie o stack_a , depois disso tem que 
+//encontrar o valor minimo e mandar para a nova stack ,x -> elementos_stacks
+//x divisao_stacks assim fica dividido por **stack em ordem , agora na stack principal
+//tem que verificar se (*stack_a)->valor tem na geral->arm, se tiver da pb no valor 
+//se nao tiver so da rra , isso vai ser a primeira parte do programa.
 int main(int ac, char **av)
 {
 	t_stack *stack_a;
