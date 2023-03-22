@@ -30,5 +30,7 @@ void printar_struct(t_stack *stack);
 void adicionar_inicio(t_stack **stack, int valor);
 void adicionar_fim(t_stack **stack, int valor);
 void get_stack(t_len *len,int ac);
+void ft_raiz(int *raiz,int ac);
+void get_stack(t_len *len,int ac);
 
 #endif

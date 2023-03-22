@@ -447,21 +447,10 @@ void dividir_stacks_maior(t_stack **stack,int ac)
 	printf("num de elementos:%f\n",num_elementos);
 }
 
-void get_stack(t_len *len,int ac)
-{
-	int raiz;
-	int raiz3;
-	ft_raiz(&raiz,ac);
-	ft_raiz(&raiz3,raiz);
-	len->raiz = raiz;
-	len->divisao_stack = ac/(raiz+raiz3);
-	len->elementos_stack = ac/len->divisao_stack;
-}
-
-//entao tenho que fazer oq ? crio uma funcao que copie o stack_a , depois disso tem que 
+//entao tenho que fazer oq ? crio uma funcao que copie o stack_a , depois disso tem que
 //encontrar o valor minimo e mandar para a nova stack ,x -> elementos_stacks
 //x divisao_stacks assim fica dividido por **stack em ordem , agora na stack principal
-//tem que verificar se (*stack_a)->valor tem na geral->arm, se tiver da pb no valor 
+//tem que verificar se (*stack_a)->valor tem na geral->arm, se tiver da pb no valor
 //se nao tiver so da rra , isso vai ser a primeira parte do programa.
 /*
 int main(int ac, char **av)

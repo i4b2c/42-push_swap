@@ -228,6 +228,18 @@ static void printar_geral(t_geral *geral)
 	}
 }
 
+void get_stack(t_len *len,int ac)
+{
+	int raiz;
+	int raiz2;
+	ft_raiz(&raiz,ac);
+	ft_raiz(&raiz2,raiz);
+	len->raiz = raiz;
+	len->divisao_stack = ac/(raiz+raiz2/2);
+	len->elementos_stack = ac/len->divisao_stack;
+	printf("elementos:%d\n",len->elementos_stack);
+}
+
 int main(int ac, char **av)
 {
 	t_stack *stack;
@@ -238,13 +250,16 @@ int main(int ac, char **av)
 	stack = NULL;
 	geral = NULL;
 	replica_stack = NULL;
-	dar_valor_a(&stack,av);
-	replicar_struct(&replica_stack,stack);
-	get_stack(&len,ac-1);
-	//get_geral(&geral,stack,len);
-	//dividir_em_tres(&geral,stack);
-	get_geral_dividido(&geral,stack,len);
-	printar_geral(geral);
-	//teste_geral(geral);
-	//teste_struct(stack,replica_stack,len);
+	if(len.ac >= 7)
+	{
+		dar_valor_a(&stack,av);
+		replicar_struct(&replica_stack,stack);
+		get_stack(&len,ac-1);
+		//get_geral(&geral,stack,len);
+		//dividir_em_tres(&geral,stack);
+		get_geral_dividido(&geral,stack,len);
+		printar_geral(geral);
+		//teste_geral(geral);
+		//teste_struct(stack,replica_stack,len);
+	}
 }
