@@ -115,20 +115,67 @@ void get_geral (t_geral **geral,t_stack *stack, t_len len)
 	}
 }
 */
+
+void get_geral_dividido(t_geral **geral, t_stack *stack , t_len len)
+{
+	int raio;
+	int elementos;
+	int count;
+	t_geral *novo;
+	t_geral *temp;
+	int i;
+
+	elementos = len.elementos_stack;
+	raio = len.raiz;
+	count = 0;
+	novo = *geral;
+	while(count < raio)
+	{
+		temp = malloc(sizeof(t_geral));
+		i = elementos;
+		while(i > 0)
+		{
+			if(stack != NULL)
+			{
+				adicionar_fim(&temp->stack,stack->valor);
+				printf("%d ",stack->valor);
+				stack = stack->next;
+			}
+			i--;
+		}
+		printf("\n");
+		novo = temp;
+		temp = temp->next;
+		novo = novo->next;
+		count++;
+	}
+}
+//tenta fazer assim
 //chat gpt me ajudou , mas ainda nao esta certo , tentar arrumar depois
 void dividir_em_tres(t_geral **geral, t_stack *stack) {
     t_geral *atual = *geral;
     t_stack *pilha_atual = stack;
     int count = 0;
+    int i = 0;
 
     while (pilha_atual != NULL) {
-        if (count % 3 == 0) {
+        if (count % 2 == 0) {
             // criar um novo nó t_geral e atribuir a pilha atual
             t_geral *novo_geral = malloc(sizeof(t_geral));
             novo_geral->stack = pilha_atual;
             novo_geral->next = NULL;
+	    /*if(count != 0)
+	    {
+		    if(stack->next->next)
+	    		stack = stack->next->next;
+			else if(stack->next)
+				stack = stack->next;
+	}*/
+	    //avancar_pilha()
+
 
             // se a lista geral estiver vazia, atualize o cabeçalho
+	    i = 0;
             if (*geral == NULL) {
                 *geral = novo_geral;
                 atual = novo_geral;
@@ -195,7 +242,8 @@ int main(int ac, char **av)
 	replicar_struct(&replica_stack,stack);
 	get_stack(&len,ac-1);
 	//get_geral(&geral,stack,len);
-	dividir_em_tres(&geral,stack);
+	//dividir_em_tres(&geral,stack);
+	get_geral_dividido(&geral,stack,len);
 	printar_geral(geral);
 	//teste_geral(geral);
 	//teste_struct(stack,replica_stack,len);
