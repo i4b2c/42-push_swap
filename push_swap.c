@@ -382,28 +382,6 @@ void organizar_stacks(t_stack **stack_a, t_stack **stack_b)
 	}
 	printf("organizou em %d passos\n",i);
 }
-/*
-int main(int ac, char **av)
-{
-	t_stack *stack_a;
-	t_stack *stack_b;
-
-	stack_a = NULL;
-	stack_b = NULL;
-	if(ac != 1)
-	{
-		dar_valor_a(&stack_a,av);
-		if(ac == 4)
-			organizar_stack_3(&stack_a);
-		//else if(ac == 5 || ac == 6)
-			//organizar_stack_5(&stack_a,&stack_b);
-		else
-			organizar_stacks(&stack_a,&stack_b);
-	}
-}*/
-
-
-
 
 void ft_raiz(int *raiz,int ac)
 {
@@ -420,17 +398,6 @@ void ft_raiz(int *raiz,int ac)
 		i++;
 	}
 }
-/*
-void converter_stack(t_stack **stack,int ac)
-{
-	int i;
-	i = 0;
-	while(i <= ac)
-	{
-		while(stack->next)
-		i++;
-	}
-}*/
 
 void dividir_stacks_maior(t_stack **stack,int ac)
 {
@@ -478,3 +445,82 @@ int main(int ac, char **av)
 	}
 	return 0;
 }*/
+
+int verificar_valor_na_stack(t_stack *stack, int valor)
+{
+	t_stack *temp;
+
+	temp = stack;
+	while(temp->next != NULL)
+	{
+		if(temp->valor == valor)
+			return 1;
+		temp = temp->next;
+	}
+	if(temp->valor == valor)
+		return 1;
+	return 0;
+}
+
+void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral *geral , t_len len)
+{
+	int i;
+	while(geral != NULL)
+	{
+		i = 0;
+		//ja esta no ultimo ????????????????/ porque crl ? , no geral
+		//acho que ja corrigi esta merda
+		//printf("%d",geral->stack->valor);
+		while(geral != NULL)
+		{
+			//printf("%d",i);
+			if(verificar_valor_na_stack(geral->stack,(*stack_a)->valor)==1)
+			{
+				ft_pa(stack_a,stack_b);
+				ft_printf("pb\n");
+				i++;
+			}
+			else
+			{
+				ft_ra(stack_a);
+				printf("ra\n");
+			}
+			//printf("%d",len.elementos_stack);
+			if(i-1 == len.elementos_stack)
+			{
+				geral = geral->next;
+				i = 0;
+			}
+			//printf("%d",i);
+			//sleep(1);
+		}
+		geral = geral->next;
+	}
+}
+
+int main(int ac, char **av)
+{
+	t_stack *stack_a;
+	t_stack *stack_b;
+	t_stack *replica_stack;
+	t_geral *geral;
+	t_len len;
+	len.ac = ac-1;
+	stack_a = NULL;
+	stack_b = NULL;
+	geral = NULL;
+	replica_stack = NULL;
+	(void)stack_b;
+	if(len.ac >= 7 && verificar_repitida(av) == 0)
+	{
+		dar_valor_a(&stack_a,av);
+		get_len(&len,ac-1);
+		replicar_struct(&replica_stack,stack_a);
+		organizar_replica(&replica_stack);
+		get_geral_dividido(&geral,replica_stack,len);
+		//printf("%d\n\n\n",geral->next->stack->valor);ele esta certo
+		//printar_geral(geral);
+		dividir_stack_b(&stack_a,&stack_b,geral,len);
+		//teste_struct(stack,replica_stack,len);
+	}
+}

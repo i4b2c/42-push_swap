@@ -47,7 +47,8 @@ SRC = libft/src/ft_isalpha.c \
       libft/src/len.c \
       libft/src/ft_printf.c \
       libft/src/get_next_line.c \
-      libft/src/get_next_line_utils.c
+      libft/src/get_next_line_utils.c \
+      teste.c
 
 CC = cc
 RM = rm -rf

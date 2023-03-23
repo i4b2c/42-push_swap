@@ -1,14 +1,5 @@
 #include "push_swap.h"
 
-/*
-typedef struct d_stack
-{
-	int valor;
-	struct d_stack *next;
-}	t_stack;
-*/
-
-//void adicionar_inicio(t_stack **stack, int valor)
 void replicar_struct(t_stack **replica,t_stack *stack)
 {
 	if(stack != NULL)
@@ -20,40 +11,6 @@ void replicar_struct(t_stack **replica,t_stack *stack)
 		}
 		adicionar_fim(replica,stack->valor);
 	}
-}
-
-static void teste_len(t_len len)
-{
-	ft_printf("len->\nac:%d\nraiz:%d\ndivisao:%d\nelementos:%d\n"
-		,len.ac,len.raiz,len.divisao_stack,len.elementos_stack);
-	ft_printf("calculo para ultimo:%d\n"
-		,len.elementos_stack+len.ac-(len.divisao_stack*len.elementos_stack));
-}
-
-static void teste_struct(t_stack *principal, t_stack *replica, t_len len)
-{
-	(void)len;
-	//printar_struct(principal);
-	//teste_len(len);
-	ft_printf("replica->\n");
-	printar_struct(replica);
-}
-
-static int tamanho_stack(t_stack *stack)
-{
-	int i;
-	i = 0;
-	if(stack != NULL)
-	{
-		while(stack->next != NULL)
-		{
-			stack = stack->next;
-			i++;
-		}
-		i++;
-		return i;
-	}
-	return 0;
 }
 
 void get_geral_dividido(t_geral **geral, t_stack *stack , t_len len)
@@ -98,7 +55,7 @@ void get_geral_dividido(t_geral **geral, t_stack *stack , t_len len)
 	*geral = novo;
 }
 
-static void printar_geral(t_geral *geral)
+void printar_geral(t_geral *geral)
 {
 	if(geral != NULL)
 	{
@@ -176,7 +133,7 @@ int verificar_repitida(char **str)
 	}
 	return 0;
 }
-
+/*
 int main(int ac, char **av)
 {
 	t_stack *stack;
@@ -195,6 +152,8 @@ int main(int ac, char **av)
 		organizar_replica(&replica_stack);
 		get_geral_dividido(&geral,replica_stack,len);
 		printar_geral(geral);
+		dividir_stack_b()
 		//teste_struct(stack,replica_stack,len);
 	}
 }
+*/

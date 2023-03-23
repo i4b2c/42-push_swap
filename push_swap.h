@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   push_swap.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/03/23 21:00:41 by marvin            #+#    #+#             */
+/*   Updated: 2023/03/23 21:00:42 by marvin           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PUSH_SWAP_H
 #define PUSH_SWAP_H
 
@@ -33,5 +45,12 @@ void get_stack(t_len *len,int ac);
 void ft_raiz(int *raiz,int ac);
 void get_stack(t_len *len,int ac);
 int verificar_organizado(t_stack *stack);
+//teste
+int verificar_repitida(char **str);
+void organizar_replica(t_stack **stack);
+void get_len(t_len *len,int ac);
+void get_geral_dividido(t_geral **geral, t_stack *stack , t_len len);
+void replicar_struct(t_stack **replica,t_stack *stack);
+void printar_geral(t_geral *geral);
 
 #endif
