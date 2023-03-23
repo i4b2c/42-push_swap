@@ -32,5 +32,6 @@ void adicionar_fim(t_stack **stack, int valor);
 void get_stack(t_len *len,int ac);
 void ft_raiz(int *raiz,int ac);
 void get_stack(t_len *len,int ac);
+int verificar_organizado(t_stack *stack);
 
 #endif

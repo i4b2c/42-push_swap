@@ -55,160 +55,47 @@ static int tamanho_stack(t_stack *stack)
 	}
 	return 0;
 }
-//nao consegui colocar esta funcao para funcionar
-/*
-void get_geral (t_geral **geral,t_stack *stack, t_len len)
-{
-	int div;
-	int ini;
-	int tamanho;
-	t_geral *temp;
-	*geral = malloc(sizeof(t_geral));
-	temp = *geral;
-	tamanho = tamanho_stack(stack);
-	if(stack != NULL)
-	{
-		ini = 1;
-		div = 0;
-		while(stack->next != NULL)
-		{
-			printf("tamanho:%d\n",tamanho);
-			if(ini != len.divisao_stack)
-				div = len.elementos_stack;
-			else
-				div = (len.elementos_stack+len.ac-(len.divisao_stack*len.elementos_stack));
-			if(ini != 1)
-				temp = malloc(sizeof(t_geral));
-			printf("%d\n",ini);
-			printf("%d\n",len.ac);
-			printf("%d\n",len.elementos_stack);
-			printf("%d\n",len.divisao_stack);
-			printf("%d\n",div);
-			printf("%d\n",(len.elementos_stack+len.ac-(len.divisao_stack*len.elementos_stack)));
-			tamanho -= div;
-			while(div > 0 && stack->next != NULL)
-			{
-				printf("%d",div);
-				adicionar_fim(&temp->stack,stack->valor);
-				temp->stack = temp->stack->next;
-				div--;
-				stack = stack->next;
-				printf("ok");
-			}
-			if(stack->next == NULL)
-			{
-				printf("%d",div);
-				adicionar_fim(&temp->stack,stack->valor);
-				temp->stack = temp->stack->next;
-				printf("ok");
-			}
-			if(stack == NULL)
-			{
-				printf("ue");
-				return ;
-			}
-			printf("\n");
-			temp = temp->next;
-			stack = stack->next;
-			ini++;
-		}
-	}
-}
-*/
 
 void get_geral_dividido(t_geral **geral, t_stack *stack , t_len len)
 {
-	int raio;
-	int elementos;
-	int count;
-	t_geral *novo;
-	t_geral *temp;
+	int raio = len.divisao_stack;
+	int elementos = len.ac/raio;
+	int count = 0;
+	t_geral *novo = NULL;
+	t_geral *atual = NULL;
+	t_geral *temp = NULL;
 	int i;
 
-	elementos = len.elementos_stack;
-	raio = len.raiz;
-	count = 0;
-	novo = *geral;
-	while(count < raio)
+	while(count <= raio)
 	{
 		temp = malloc(sizeof(t_geral));
-		i = elementos;
+		temp->stack = NULL;
+		if(count == raio-1)
+			i = len.elementos_stack+(len.ac-(len.elementos_stack*len.divisao_stack));
+		else
+			i = elementos;
 		while(i > 0)
 		{
 			if(stack != NULL)
 			{
 				adicionar_fim(&temp->stack,stack->valor);
-				printf("%d ",stack->valor);
 				stack = stack->next;
 			}
 			i--;
 		}
-		printf("\n");
-		novo = temp;
-		temp = temp->next;
-		novo = novo->next;
+		if(novo == NULL)
+		{
+			novo = temp;
+			atual = novo;
+		}
+		else
+		{
+			atual->next = temp;
+			atual = atual->next;
+		}
 		count++;
 	}
-}
-//tenta fazer assim
-//chat gpt me ajudou , mas ainda nao esta certo , tentar arrumar depois
-void dividir_em_tres(t_geral **geral, t_stack *stack) {
-    t_geral *atual = *geral;
-    t_stack *pilha_atual = stack;
-    int count = 0;
-    int i = 0;
-
-    while (pilha_atual != NULL) {
-        if (count % 2 == 0) {
-            // criar um novo nó t_geral e atribuir a pilha atual
-            t_geral *novo_geral = malloc(sizeof(t_geral));
-            novo_geral->stack = pilha_atual;
-            novo_geral->next = NULL;
-	    /*if(count != 0)
-	    {
-		    if(stack->next->next)
-	    		stack = stack->next->next;
-			else if(stack->next)
-				stack = stack->next;
-	}*/
-	    //avancar_pilha()
-
-
-            // se a lista geral estiver vazia, atualize o cabeçalho
-	    i = 0;
-            if (*geral == NULL) {
-                *geral = novo_geral;
-                atual = novo_geral;
-            } else {
-                // caso contrário, adicione o novo nó ao final da lista geral
-                atual->next = novo_geral;
-                atual = novo_geral;
-            }
-        }
-
-        // atualizar a pilha atual e contador
-        pilha_atual = pilha_atual->next;
-        count++;
-    }
-}
-
-
-static void teste_geral(t_geral *geral)
-{
-	if(geral != NULL)
-	{
-		while(geral->next != NULL)
-		{
-			while(geral->stack->next != NULL)
-			{
-				ft_printf("%d\n",geral->stack->valor);
-				geral->stack = geral->stack->next;
-			}
-			ft_printf("%d\n",geral->stack->valor);
-			geral = geral->next;
-			ft_printf("ok\n");
-		}
-	}
+	*geral = novo;
 }
 
 static void printar_geral(t_geral *geral)
@@ -222,13 +109,14 @@ static void printar_geral(t_geral *geral)
 				printf("%d ",geral->stack->valor);
 				geral->stack = geral->stack->next;
 			}
+			printf("%d",geral->stack->valor);
 			printf("\n");
 			geral = geral->next;
 		}
 	}
 }
 
-void get_stack(t_len *len,int ac)
+void get_len(t_len *len,int ac)
 {
 	int raiz;
 	int raiz2;
@@ -237,7 +125,33 @@ void get_stack(t_len *len,int ac)
 	len->raiz = raiz;
 	len->divisao_stack = ac/(raiz+raiz2/2);
 	len->elementos_stack = ac/len->divisao_stack;
-	printf("elementos:%d\n",len->elementos_stack);
+}
+
+void organizar_replica(t_stack **stack)
+{
+	t_stack *temp;
+	int temp_valor;
+
+	temp = NULL;
+	while(1)
+	{
+		temp = *stack;
+		if(verificar_organizado(*stack)==0)
+			break;
+		else
+		{
+			while(temp->next != NULL)
+			{
+				if(temp->valor > temp->next->valor)
+				{
+					temp_valor = temp->valor;
+					temp->valor = temp->next->valor;
+					temp->next->valor = temp_valor;
+				}
+				temp = temp->next;
+			}
+		}
+	}
 }
 
 int main(int ac, char **av)
@@ -253,13 +167,11 @@ int main(int ac, char **av)
 	if(len.ac >= 7)
 	{
 		dar_valor_a(&stack,av);
+		get_len(&len,ac-1);
 		replicar_struct(&replica_stack,stack);
-		get_stack(&len,ac-1);
-		//get_geral(&geral,stack,len);
-		//dividir_em_tres(&geral,stack);
-		get_geral_dividido(&geral,stack,len);
+		organizar_replica(&replica_stack);
+		get_geral_dividido(&geral,replica_stack,len);
 		printar_geral(geral);
-		//teste_geral(geral);
 		//teste_struct(stack,replica_stack,len);
 	}
 }
