@@ -154,6 +154,29 @@ void organizar_replica(t_stack **stack)
 	}
 }
 
+int verificar_repitida(char **str)
+{
+	int temp;
+
+	int i;
+	int j;
+
+	i = 1;
+	while(str[i] != NULL)
+	{
+		j = 1;
+		temp = ft_atoi(str[i]);
+		while(str[j] != NULL)
+		{
+			if(i != j && temp == ft_atoi(str[j]))
+				return 1;
+			j++;
+		}
+		i++;
+	}
+	return 0;
+}
+
 int main(int ac, char **av)
 {
 	t_stack *stack;
@@ -164,7 +187,7 @@ int main(int ac, char **av)
 	stack = NULL;
 	geral = NULL;
 	replica_stack = NULL;
-	if(len.ac >= 7)
+	if(len.ac >= 7 && verificar_repitida(av) == 0)
 	{
 		dar_valor_a(&stack,av);
 		get_len(&len,ac-1);
