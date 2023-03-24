@@ -534,6 +534,7 @@ int main(int ac, char **av)
 		organizar_replica(&replica_stack);
 		get_geral_dividido(&geral,replica_stack,len);
 		dividir_stack_b(&stack_a,&stack_b,&geral,len);
+		//se len.ac == 15 ele simplesmente nao funciona :(
 		//printf("\ngeral:\n");
 		//printar_geral(&geral);
 		//ok o visualizer n da ? mas n sei pq
