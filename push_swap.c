@@ -457,33 +457,18 @@ int verificar_valor_na_stack(t_stack *stack, int valor)
 	return 0;
 }
 
-void excluir_numero(t_stack *stack, int valor) {
-    t_stack *p = stack;
-    t_stack *prev = NULL;
-    while (p != NULL) {
-        if (p->valor == valor) {
-            if (prev == NULL) {
-                stack = p->next;
-            } else {
-                prev->next = p->next;
-            }
-            free(p);
-            return;
-        }
-        prev = p;
-        p = p->next;
-    }
-}
-
 //epa nao sei oq esta mal , vamos ver depois aaaaaaaaaaaaaaa
 void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_len len)
 {
+	//tenho que fazer dar a ultima peca , tu entende ithalo
 	(void)len;
 	t_geral *temp;
 	int i;
+	int len_d;
 
 	temp = *geral;
 	i = 0;
+	len_d = 0;
 	while(temp != NULL && *stack_a != NULL)
 	{
 		if(*stack_a)
@@ -500,18 +485,34 @@ void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_l
 			} else {
 				//printf("Valor %d não encontrado na pilha:\n", (*stack_a)->valor);
 				//printar_struct(temp->stack); // Imprime a pilha para fins de debug
-				ft_ra(stack_a);
-				printf("ra\n");
+				/*if(escolher_ra_rra(temp_stack_a,temp_stack)==1)
+				{
+					ft_ra(stack_a);
+					printf("ra\n");
+				}
+				else
+				{*/
+					ft_ra(stack_a);
+					printf("ra\n");
+				//}
 			}
 		}
 		if(i == len.elementos_stack)
 		{
 			//if(temp->next == NULL)
 			//	break;
-			temp = temp->next;
+			if(len_d + 1 != len.divisao_stack)
+			{
+				temp = temp->next;
+				i = 0;
+			}
+			len_d++;
 		}
-		//sleep(1);
+
+		//usleep(100000);
 	}
+	ft_pa(stack_a, stack_b);
+	printf("pb\n");
 }
 
 int main(int ac, char **av)
