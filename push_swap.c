@@ -462,40 +462,39 @@ int verificar_valor_na_stack(t_stack *stack, int valor)
 	return 0;
 }
 
-void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral *geral , t_len len)
+void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_len len)
 {
+	(void)len;
+	t_geral *temp;
+	t_stack *temp_stack;
 	int i;
-	while(geral != NULL)
+
+	temp = *geral;
+	i = 0;
+	temp_stack = malloc(sizeof(t_stack));
+	while(temp != NULL)
 	{
-		i = 0;
-		//ja esta no ultimo ????????????????/ porque crl ? , no geral
-		//acho que ja corrigi esta merda
-		//printf("%d",geral->stack->valor);
-		while(geral != NULL)
+		temp_stack = temp->stack;
+		if(verificar_valor_na_stack(temp_stack,(*stack_a)->valor)==1)
 		{
-			//printf("%d",i);
-			if(verificar_valor_na_stack(geral->stack,(*stack_a)->valor)==1)
-			{
-				ft_pa(stack_a,stack_b);
-				ft_printf("pb\n");
-				i++;
-			}
-			else
-			{
-				ft_ra(stack_a);
-				printf("ra\n");
-			}
-			//printf("%d",len.elementos_stack);
-			if(i-1 == len.elementos_stack)
-			{
-				geral = geral->next;
-				i = 0;
-			}
-			//printf("%d",i);
-			//sleep(1);
+			ft_pa(stack_a,stack_b);
+			ft_printf("pb\n");
+			i++;
 		}
-		geral = geral->next;
+		else
+		{
+			ft_ra(stack_a);
+			printf("ra\n");
+		}
+		if(i == len.elementos_stack)
+		{
+			temp = temp->next;
+			i = 0;
+		}
+		//printf("%d",i);
 	}
+	ft_pa(stack_a,stack_b);
+	ft_printf("pb\n");
 }
 
 int main(int ac, char **av)
@@ -519,8 +518,11 @@ int main(int ac, char **av)
 		organizar_replica(&replica_stack);
 		get_geral_dividido(&geral,replica_stack,len);
 		//printf("%d\n\n\n",geral->next->stack->valor);ele esta certo
-		//printar_geral(geral);
-		dividir_stack_b(&stack_a,&stack_b,geral,len);
+		//printar_geral(&geral);
+		//printf("%d",geral->next->stack->valor);
+		//printf("%d",geral->stack->valor);
+		dividir_stack_b(&stack_a,&stack_b,&geral,len);
+		//printar_struct(stack_b);
 		//teste_struct(stack,replica_stack,len);
 	}
 }

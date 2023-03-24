@@ -23,7 +23,7 @@ void get_geral_dividido(t_geral **geral, t_stack *stack , t_len len)
 	t_geral *temp = NULL;
 	int i;
 
-	while(count <= raio)
+	while(count < raio)
 	{
 		temp = malloc(sizeof(t_geral));
 		temp->stack = NULL;
@@ -55,6 +55,7 @@ void get_geral_dividido(t_geral **geral, t_stack *stack , t_len len)
 	*geral = novo;
 }
 
+/*
 void printar_geral(t_geral *geral)
 {
 	if(geral != NULL)
@@ -69,6 +70,34 @@ void printar_geral(t_geral *geral)
 			printf("%d",geral->stack->valor);
 			printf("\n");
 			geral = geral->next;
+		}
+		while(geral->stack->next != NULL)
+		{
+			printf("%d ",geral->stack->valor);
+			geral->stack = geral->stack->next;
+		}
+		printf("%d",geral->stack->valor);
+		printf("\n");
+	}
+}*/
+
+void printar_geral(t_geral **geral)
+{
+	t_geral *temp;
+	temp = *geral;
+	t_stack *stack_temp;
+	if(temp != NULL)
+	{
+		while(temp != NULL)
+		{
+			stack_temp = temp->stack;
+			while(stack_temp != NULL)
+			{
+				ft_printf("%d ",stack_temp->valor);
+				stack_temp = stack_temp->next;
+			}
+			printf("\n");
+			temp = temp->next;
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:00:41 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/23 21:00:42 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/24 02:02:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,6 @@ void organizar_replica(t_stack **stack);
 void get_len(t_len *len,int ac);
 void get_geral_dividido(t_geral **geral, t_stack *stack , t_len len);
 void replicar_struct(t_stack **replica,t_stack *stack);
-void printar_geral(t_geral *geral);
+void printar_geral(t_geral **geral);
 
 #endif
