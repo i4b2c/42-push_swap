@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:00:41 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/24 02:02:36 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/24 14:15:12 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct d_stack
 
 typedef struct d_geral
 {
-	t_stack *stack;
+	struct d_stack *stack;
 	struct d_geral *next;
 }	t_geral;
 

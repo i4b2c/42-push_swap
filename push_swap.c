@@ -448,38 +448,52 @@ int main(int ac, char **av)
 
 int verificar_valor_na_stack(t_stack *stack, int valor)
 {
-	t_stack *temp;
-
-	temp = stack;
-	while(temp->next != NULL)
+	while(stack->next != NULL)
 	{
-		if(temp->valor == valor)
+		if(stack->valor == valor)
 			return 1;
-		temp = temp->next;
+		stack = stack->next;
 	}
-	if(temp->valor == valor)
+	if(stack->valor == valor)
 		return 1;
 	return 0;
 }
-
+//epa nao sei oq esta mal , vamos ver depois aaaaaaaaaaaaaaa
 void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_len len)
 {
 	(void)len;
 	t_geral *temp;
-	t_stack *temp_stack;
+	//t_stack *temp_stack;
 	int i;
 
 	temp = *geral;
-	i = 0;
-	temp_stack = malloc(sizeof(t_stack));
+	i = 1;
+	//temp_stack = malloc(sizeof(t_stack));
+	//o que eu pensei , fazer uma funcao para veriicar se esta vazio
+	//se estiver vazio vai simplesmente avancar em um , se o proximo ja for
+	//NULL ele simplesmente da um break e acaba o while ,
+	//e tenta fazer uns tens mais precisos e menores assim consegues acompanhar
+	//melhor o teu programa , HA e nao esquece de retirar o valor do t_geral , assim
+	//alguma hora ele vai ficar vazio , tentar resolver isso neste fim de semana , se conseguir era
+	//coisa linda.
 	while(temp != NULL)
 	{
-		temp_stack = temp->stack;
-		if(verificar_valor_na_stack(temp_stack,(*stack_a)->valor)==1)
+		//temp_stack = temp->stack;
+		//printf("teste:%d %d\n",temp->stack->valor, (*stack_a)->valor);
+		if(temp->stack->valor == (*stack_a)->valor)
 		{
+			//printf("\nteste:\n");
+			//printar_struct(temp->stack);
+			//printf("valor:%d\n",(*stack_a)->valor);
+			temp->stack = temp->stack->next;
+			//ft_printf("\n%d,proximo:%d",(*stack_a)->valor,(*stack_a)->next->valor);
 			ft_pa(stack_a,stack_b);
+			//ft_printf("%d",(*stack_a)->valor);
+			//*stack_a = (*stack_a)->next;
 			ft_printf("pb\n");
-			i++;
+			//break;
+			//break;
+			//i++;
 		}
 		else
 		{
@@ -491,11 +505,25 @@ void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_l
 			temp = temp->next;
 			i = 0;
 		}
+		//sleep(1);
 		//printf("%d",i);
 	}
-	ft_pa(stack_a,stack_b);
-	ft_printf("pb\n");
+	//ft_pa(stack_a,stack_b);
+	//ft_printf("pb\n");
 }
+/*
+static void teste(t_geral **geral)
+{
+	t_geral *temp;
+	t_stack *temp_stack;
+	temp = *geral;
+	temp_stack = temp->stack;
+	while(temp_stack != NULL)
+	{
+		printf("%d",temp_stack->valor);
+		temp_stack = temp_stack->next;
+	}
+}*/
 
 int main(int ac, char **av)
 {
@@ -509,7 +537,6 @@ int main(int ac, char **av)
 	stack_b = NULL;
 	geral = NULL;
 	replica_stack = NULL;
-	(void)stack_b;
 	if(len.ac >= 7 && verificar_repitida(av) == 0)
 	{
 		dar_valor_a(&stack_a,av);
@@ -517,12 +544,12 @@ int main(int ac, char **av)
 		replicar_struct(&replica_stack,stack_a);
 		organizar_replica(&replica_stack);
 		get_geral_dividido(&geral,replica_stack,len);
-		//printf("%d\n\n\n",geral->next->stack->valor);ele esta certo
-		//printar_geral(&geral);
-		//printf("%d",geral->next->stack->valor);
-		//printf("%d",geral->stack->valor);
 		dividir_stack_b(&stack_a,&stack_b,&geral,len);
+		//printar_geral(&geral);
+		//ok o visualizer n da ? mas n sei pq
 		//printar_struct(stack_b);
+		//printar_struct(stack_a);
+		//printar_geral(&geral);
 		//teste_struct(stack,replica_stack,len);
 	}
 }
