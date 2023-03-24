@@ -448,82 +448,71 @@ int main(int ac, char **av)
 
 int verificar_valor_na_stack(t_stack *stack, int valor)
 {
-	while(stack->next != NULL)
+	while(stack != NULL)
 	{
 		if(stack->valor == valor)
 			return 1;
 		stack = stack->next;
 	}
-	if(stack->valor == valor)
-		return 1;
 	return 0;
 }
+
+void excluir_numero(t_stack *stack, int valor) {
+    t_stack *p = stack;
+    t_stack *prev = NULL;
+    while (p != NULL) {
+        if (p->valor == valor) {
+            if (prev == NULL) {
+                stack = p->next;
+            } else {
+                prev->next = p->next;
+            }
+            free(p);
+            return;
+        }
+        prev = p;
+        p = p->next;
+    }
+}
+
 //epa nao sei oq esta mal , vamos ver depois aaaaaaaaaaaaaaa
 void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_len len)
 {
 	(void)len;
 	t_geral *temp;
-	//t_stack *temp_stack;
 	int i;
 
 	temp = *geral;
-	i = 1;
-	//temp_stack = malloc(sizeof(t_stack));
-	//o que eu pensei , fazer uma funcao para veriicar se esta vazio
-	//se estiver vazio vai simplesmente avancar em um , se o proximo ja for
-	//NULL ele simplesmente da um break e acaba o while ,
-	//e tenta fazer uns tens mais precisos e menores assim consegues acompanhar
-	//melhor o teu programa , HA e nao esquece de retirar o valor do t_geral , assim
-	//alguma hora ele vai ficar vazio , tentar resolver isso neste fim de semana , se conseguir era
-	//coisa linda.
-	while(temp != NULL)
+	i = 0;
+	while(temp != NULL && *stack_a != NULL)
 	{
-		//temp_stack = temp->stack;
-		//printf("teste:%d %d\n",temp->stack->valor, (*stack_a)->valor);
-		if(temp->stack->valor == (*stack_a)->valor)
+		if(*stack_a)
 		{
-			//printf("\nteste:\n");
-			//printar_struct(temp->stack);
-			//printf("valor:%d\n",(*stack_a)->valor);
-			temp->stack = temp->stack->next;
-			//ft_printf("\n%d,proximo:%d",(*stack_a)->valor,(*stack_a)->next->valor);
-			ft_pa(stack_a,stack_b);
-			//ft_printf("%d",(*stack_a)->valor);
-			//*stack_a = (*stack_a)->next;
-			ft_printf("pb\n");
-			//break;
-			//break;
-			//i++;
-		}
-		else
-		{
-			ft_ra(stack_a);
-			printf("ra\n");
+			//ok , funciona com numeros pequenos , tentar ver melhor depois
+			if (verificar_valor_na_stack(temp->stack, (*stack_a)->valor) == 1) {
+				//printf("Valor %d encontrado na pilha:\n", (*stack_a)->valor);
+				//printar_struct(temp->stack); // Imprime a pilha para fins de debug
+				//printf("movido o valor:%d\n",(*stack_a)->valor);
+				//excluir_numero(temp->stack,(*stack_a)->valor);
+				ft_pa(stack_a, stack_b);
+				printf("pb\n");
+				i++;
+			} else {
+				//printf("Valor %d não encontrado na pilha:\n", (*stack_a)->valor);
+				//printar_struct(temp->stack); // Imprime a pilha para fins de debug
+				ft_ra(stack_a);
+				printf("ra\n");
+			}
 		}
 		if(i == len.elementos_stack)
 		{
+			//if(temp->next == NULL)
+			//	break;
 			temp = temp->next;
-			i = 0;
 		}
 		//sleep(1);
-		//printf("%d",i);
 	}
-	//ft_pa(stack_a,stack_b);
-	//ft_printf("pb\n");
 }
-/*
-static void teste(t_geral **geral)
-{
-	t_geral *temp;
-	t_stack *temp_stack;
-	temp = *geral;
-	temp_stack = temp->stack;
-	while(temp_stack != NULL)
-	{
-		printf("%d",temp_stack->valor);
-		temp_stack = temp_stack->next;
-	}
-}*/
 
 int main(int ac, char **av)
 {
@@ -537,7 +526,7 @@ int main(int ac, char **av)
 	stack_b = NULL;
 	geral = NULL;
 	replica_stack = NULL;
-	if(len.ac >= 7 && verificar_repitida(av) == 0)
+	if(len.ac >= 3 && verificar_repitida(av) == 0)
 	{
 		dar_valor_a(&stack_a,av);
 		get_len(&len,ac-1);
@@ -545,6 +534,7 @@ int main(int ac, char **av)
 		organizar_replica(&replica_stack);
 		get_geral_dividido(&geral,replica_stack,len);
 		dividir_stack_b(&stack_a,&stack_b,&geral,len);
+		//printf("\ngeral:\n");
 		//printar_geral(&geral);
 		//ok o visualizer n da ? mas n sei pq
 		//printar_struct(stack_b);
