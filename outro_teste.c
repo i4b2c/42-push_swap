@@ -130,5 +130,5 @@ void start_organizar(t_stack **stack_a, t_stack **stack_b, t_len len_d)
 		printar_struct(stack_a);*/
 	}
 	//printf("ok%d\n",teste);
-	printar_struct(*stack_a);
+	//printar_struct(*stack_a);
 }
