@@ -504,7 +504,7 @@ int main(int ac, char **av)
 		organizar_replica(&replica_stack);
 		get_geral_dividido(&geral,replica_stack,len);
 		dividir_stack_b(&stack_a,&stack_b,&geral,len);
-		start_organizar(&stack_a,&stack_b);
+		start_organizar(&stack_a,&stack_b,len);
 		//organizar_stack_b_a(&stack_a,&stack_b,len);
 	}
 }

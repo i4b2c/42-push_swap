@@ -114,7 +114,7 @@ void get_len(t_len *len,int ac)
 	else
 		len->divisao_stack = ac/(raiz+(raiz2/2));
 	len->elementos_stack = ac/len->divisao_stack;
-	//len->ultimo_elementos = (len->elementos_stack+ac-(len->elementos_stack*len->divisao_stack));
+	len->ultimo_elementos = (len->elementos_stack+ac-(len->elementos_stack*len->divisao_stack));
 }
 
 void organizar_replica(t_stack **stack)

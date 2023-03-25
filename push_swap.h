@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:00:41 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/25 19:44:56 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/25 21:04:53 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ typedef struct d_len
 void ft_pa(t_stack **stack_a,t_stack **stack_b);
 void ft_ra(t_stack **stack);
 void ft_rra(t_stack **stack);
+void ft_sa(t_stack **stack);
 
 void dar_valor_a(t_stack **stack , char **av);
 void printar_struct(t_stack *stack);
@@ -60,7 +61,7 @@ void replicar_struct(t_stack **replica,t_stack *stack);
 void printar_geral(t_geral **geral);
 
 //outro teste
-void start_organizar(t_stack **stack_a, t_stack **stack_b);
+void start_organizar(t_stack **stack_a, t_stack **stack_b,t_len len);
 int verificar_valores_max(t_stack *stack);
 
 #endif
