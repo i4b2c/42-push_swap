@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:00:41 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/24 14:15:12 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/25 13:51:09 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,13 @@ typedef struct d_len
 	int raiz;
 	int ac;
 	int divisao_stack;
+	int ultimo_elementos;
 	int elementos_stack;
 }	t_len;
+
+//principais
+void ft_pa(t_stack **stack_a,t_stack **stack_b);
+void ft_ra(t_stack **stack);
 
 void dar_valor_a(t_stack **stack , char **av);
 void printar_struct(t_stack *stack);

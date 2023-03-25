@@ -244,8 +244,6 @@ int organizar(t_stack **stack_a, t_stack **stack_b)
 		i++;
 	}
 	else if((valor_do_ultimo(*stack_a) < (*stack_a)->valor))
-		//|| (valor_do_ultimo(*stack_a) > (*stack_a)->valor
-		//	&& (*stack_a)->next->valor > (*stack_a)->valor))
 	{
 		if((*stack_a)->valor < (*stack_a)->next->valor)
 		{
@@ -399,11 +397,10 @@ void ft_raiz(int *raiz,int ac)
 	}
 }
 
+/*
 void dividir_stacks_maior(t_stack **stack,int ac)
 {
-	(void)stack;
 	int raiz;
-	//ac = 500;
 	double stack_dividido;
 	double num_elementos;
 	ft_raiz(&raiz,ac);
@@ -412,38 +409,6 @@ void dividir_stacks_maior(t_stack **stack,int ac)
 	num_elementos = ac/stack_dividido;
 	printf("stack vai ser dividido em:%d\n",(int)stack_dividido);
 	printf("num de elementos:%f\n",num_elementos);
-}
-
-//entao tenho que fazer oq ? crio uma funcao que copie o stack_a , depois disso tem que
-//encontrar o valor minimo e mandar para a nova stack ,x -> elementos_stacks
-//x divisao_stacks assim fica dividido por **stack em ordem , agora na stack principal
-//tem que verificar se (*stack_a)->valor tem na geral->arm, se tiver da pb no valor
-//se nao tiver so da rra , isso vai ser a primeira parte do programa.
-/*
-int main(int ac, char **av)
-{
-	t_stack *stack_a;
-	t_stack *stack_b;
-	t_geral *geral;
-	t_len len;
-
-	geral = NULL;
-	stack_a = NULL;
-	stack_b = NULL;
-	(void)stack_b;
-	if(ac != 1)
-	{
-		get_stack(&len,ac-1);
-		len.ac = ac;
-		dar_valor_a(&stack_a,av);
-		criar_geral(&geral,stack_a,len);
-		//(ac >= 10) ? dividir_stacks_maior(&stack_a,ac-1) : dividir_stacks_maior(&stack_a,ac-1);
-		if(ac >= 10)
-			dividir_stacks_maior(&stack_a,ac-1);
-		else if(ac >= 7 && ac <= 9)
-			dividir_stacks_maior(&stack_a,ac-1);
-	}
-	return 0;
 }*/
 
 int verificar_valor_na_stack(t_stack *stack, int valor)
@@ -457,11 +422,8 @@ int verificar_valor_na_stack(t_stack *stack, int valor)
 	return 0;
 }
 
-//epa nao sei oq esta mal , vamos ver depois aaaaaaaaaaaaaaa
 void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_len len)
 {
-	//tenho que fazer dar a ultima peca , tu entende ithalo
-	(void)len;
 	t_geral *temp;
 	int i;
 	int len_d;
@@ -473,34 +435,18 @@ void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_l
 	{
 		if(*stack_a)
 		{
-			//ok , funciona com numeros pequenos , tentar ver melhor depois
 			if (verificar_valor_na_stack(temp->stack, (*stack_a)->valor) == 1) {
-				//printf("Valor %d encontrado na pilha:\n", (*stack_a)->valor);
-				//printar_struct(temp->stack); // Imprime a pilha para fins de debug
-				//printf("movido o valor:%d\n",(*stack_a)->valor);
-				//excluir_numero(temp->stack,(*stack_a)->valor);
 				ft_pa(stack_a, stack_b);
 				printf("pb\n");
 				i++;
 			} else {
-				//printf("Valor %d não encontrado na pilha:\n", (*stack_a)->valor);
-				//printar_struct(temp->stack); // Imprime a pilha para fins de debug
-				/*if(escolher_ra_rra(temp_stack_a,temp_stack)==1)
-				{
 					ft_ra(stack_a);
 					printf("ra\n");
-				}
-				else
-				{*/
-					ft_ra(stack_a);
-					printf("ra\n");
-				//}
+				//depois tenta aplicar a logica do ra e rra , apesar do ra ter um desempenho melhor
 			}
 		}
 		if(i == len.elementos_stack)
 		{
-			//if(temp->next == NULL)
-			//	break;
 			if(len_d + 1 != len.divisao_stack)
 			{
 				temp = temp->next;
@@ -508,13 +454,36 @@ void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_l
 			}
 			len_d++;
 		}
-
-		//usleep(100000);
 	}
 	ft_pa(stack_a, stack_b);
 	printf("pb\n");
 }
+/*
+void organizar_stack_b_a(t_stack **stack_a, t_stack **stack_b, t_len len)
+{
+	int i;
+	int cont;
 
+	i = 0;
+	while(stack_b != NULL)
+	{
+		while(i <= len.divisao_stack)
+		{
+			if(i == 0)
+				cont = len.ultimo_elementos;
+			else
+				cont = len.elementos_stack;
+			while(cont > 0)
+			{
+				//if()
+				break;
+			}
+		}
+		i++;
+	}
+}
+*/
+/*
 int main(int ac, char **av)
 {
 	t_stack *stack_a;
@@ -535,13 +504,6 @@ int main(int ac, char **av)
 		organizar_replica(&replica_stack);
 		get_geral_dividido(&geral,replica_stack,len);
 		dividir_stack_b(&stack_a,&stack_b,&geral,len);
-		//se len.ac == 15 ele simplesmente nao funciona :(
-		//printf("\ngeral:\n");
-		//printar_geral(&geral);
-		//ok o visualizer n da ? mas n sei pq
-		//printar_struct(stack_b);
-		//printar_struct(stack_a);
-		//printar_geral(&geral);
-		//teste_struct(stack,replica_stack,len);
+		organizar_stack_b_a(&stack_a,&stack_b,len);
 	}
-}
+}*/

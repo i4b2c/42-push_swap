@@ -109,8 +109,12 @@ void get_len(t_len *len,int ac)
 	ft_raiz(&raiz,ac);
 	ft_raiz(&raiz2,raiz);
 	len->raiz = raiz;
-	len->divisao_stack = ac/(raiz+raiz2/2);
+	if(ac > 20)
+		len->divisao_stack = ac/(raiz+(raiz2*2));
+	else
+		len->divisao_stack = ac/(raiz+(raiz2/2));
 	len->elementos_stack = ac/len->divisao_stack;
+	//len->ultimo_elementos = (len->elementos_stack+ac-(len->elementos_stack*len->divisao_stack));
 }
 
 void organizar_replica(t_stack **stack)
