@@ -483,7 +483,7 @@ void organizar_stack_b_a(t_stack **stack_a, t_stack **stack_b, t_len len)
 	}
 }
 */
-/*
+
 int main(int ac, char **av)
 {
 	t_stack *stack_a;
@@ -504,6 +504,7 @@ int main(int ac, char **av)
 		organizar_replica(&replica_stack);
 		get_geral_dividido(&geral,replica_stack,len);
 		dividir_stack_b(&stack_a,&stack_b,&geral,len);
-		organizar_stack_b_a(&stack_a,&stack_b,len);
+		start_organizar(&stack_a,&stack_b);
+		//organizar_stack_b_a(&stack_a,&stack_b,len);
 	}
-}*/
+}
