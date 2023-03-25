@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:00:41 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/25 21:04:53 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/25 22:45:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void get_stack(t_len *len,int ac);
 void ft_raiz(int *raiz,int ac);
 void get_stack(t_len *len,int ac);
 int verificar_organizado(t_stack *stack);
+int valor_do_ultimo(t_stack *stack);
 //teste
 int verificar_repitida(char **str);
 void organizar_replica(t_stack **stack);
