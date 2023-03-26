@@ -28,27 +28,6 @@ void adicionar_fim(t_stack **stack, int valor)
 	}
 }
 
-void adicionar_meio(t_stack **stack, int valor, int ref)
-{
-	t_stack *novo;
-	t_stack *temp;
-	novo = malloc(sizeof(t_stack));
-	temp = malloc(sizeof(t_stack));
-	if(!novo)
-		return ;
-	temp = *stack;
-	novo->valor = valor;
-	if(*stack == NULL)
-	{
-		*stack = novo;
-		novo->next = NULL;
-	}
-	while(temp->valor != ref && temp->next != NULL)
-		temp = temp->next;
-	novo->next = temp->next;
-	temp->next = novo;
-}
-
 void printar_struct(t_stack *stack)
 {
 	if(stack != NULL)
@@ -400,20 +379,6 @@ void ft_raiz(int *raiz,int ac)
 	}
 }
 
-/*
-void dividir_stacks_maior(t_stack **stack,int ac)
-{
-	int raiz;
-	double stack_dividido;
-	double num_elementos;
-	ft_raiz(&raiz,ac);
-	printf("raiz:%d\n",raiz);
-	stack_dividido = ac/(raiz+(raiz/4));
-	num_elementos = ac/stack_dividido;
-	printf("stack vai ser dividido em:%d\n",(int)stack_dividido);
-	printf("num de elementos:%f\n",num_elementos);
-}*/
-
 int verificar_valor_na_stack(t_stack *stack, int valor)
 {
 	while(stack != NULL)
@@ -445,7 +410,6 @@ void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_l
 			} else {
 					ft_ra(stack_a);
 					printf("ra\n");
-				//depois tenta aplicar a logica do ra e rra , apesar do ra ter um desempenho melhor
 			}
 		}
 		if(i == len.elementos_stack)
@@ -471,6 +435,28 @@ void simple_sa(t_stack **stack)
 	}
 }
 
+int verificar_non_numberic(char **str)
+{
+	int i;
+	int j;
+	i = 1;
+	while(str[i] != NULL)
+	{
+		j = 0;
+		while(str[i][j])
+		{
+			if(str[i][0] != '-'
+				&& !(str[i][0] <= '9' && str[i][0] >= '0'))
+				return 1;
+			else if(j != 0 && !(str[i][j] <= '9' && str[i][j] >= '0'))
+				return 1;
+			j++;
+		}
+		i++;
+	}
+	return 0;
+}
+
 int main(int ac, char **av)
 {
 	t_stack *stack_a;
@@ -483,7 +469,13 @@ int main(int ac, char **av)
 	stack_b = NULL;
 	geral = NULL;
 	replica_stack = NULL;
-	if(len.ac >= 2 && verificar_repitida(av) == 0)
+	if(verificar_non_numberic(av) == 1
+		|| verificar_repitida(av) == 1)
+	{
+		ft_printf("Error\n");
+		return 0;
+	}
+	else if(len.ac >= 2)
 	{
 		dar_valor_a(&stack_a,av);
 		get_len(&len,ac-1);

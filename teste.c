@@ -139,9 +139,32 @@ void organizar_replica(t_stack **stack)
 	}
 }
 
+long long int	ft_atoll(const char *str)
+{
+	long long int	result;
+	int						sign;
+
+	result = 0;
+	sign = 1;
+	while ((*str > 8 && *str < 14) || *str == 32)
+		str++;
+	if (*str == 45 || *str == 43)
+	{
+		if (*str == 45)
+			sign = -1;
+		str++;
+	}
+	while (*str > 47 && *str < 58)
+	{
+		result = result * 10 + (*str - 48);
+		str++;
+	}
+	return ((long long int)result * sign);
+}
+
 int verificar_repitida(char **str)
 {
-	int temp;
+	long long int temp;
 
 	int i;
 	int j;
@@ -150,10 +173,12 @@ int verificar_repitida(char **str)
 	while(str[i] != NULL)
 	{
 		j = 1;
-		temp = ft_atoi(str[i]);
+		temp = ft_atoll(str[i]);
+		if(temp > INT_MAX || temp < INT_MIN)
+			return 1;
 		while(str[j] != NULL)
 		{
-			if(i != j && temp == ft_atoi(str[j]))
+			if(i != j && temp == ft_atoll(str[j]))
 				return 1;
 			j++;
 		}

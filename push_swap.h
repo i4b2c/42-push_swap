@@ -14,6 +14,7 @@
 #define PUSH_SWAP_H
 
 #include "libft/src/libft.h"
+#include <limits.h>
 
 typedef struct d_stack
 {
