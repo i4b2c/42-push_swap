@@ -343,20 +343,23 @@ void organizar_stack_3(t_stack **stack_a)
 		else
 			i += organizar_3(stack_a);
 	}
-	printf("organizou em %d passos\n",i);
+	(void)i;
+	//printf("organizou em %d passos\n",i);
 }
 
-void organizar_stack_5(t_stack **stack_a, t_stack **stack_b)
+void organizar_stack_5(t_stack **stack_a,t_stack **stack_b)
 {
 	int i;
 	i = 0;
-	(void)stack_a;
-	(void)stack_b;
 	while(1)
 	{
-		break;
+		if((verificar_organizado(*stack_a)) == 0 && *stack_b == NULL)
+			break;
+		else
+			i += organizar(stack_a,stack_b);
 	}
-	printf("organizou em %d passos\n",i);
+	(void)i;
+	//printf("organizou em %d passos\n",i);
 }
 
 int verificar_stack_b(t_stack *stack)
@@ -500,11 +503,19 @@ int main(int ac, char **av)
 	{
 		dar_valor_a(&stack_a,av);
 		get_len(&len,ac-1);
-		replicar_struct(&replica_stack,stack_a);
-		organizar_replica(&replica_stack);
-		get_geral_dividido(&geral,replica_stack,len);
-		dividir_stack_b(&stack_a,&stack_b,&geral,len);
-		start_organizar(&stack_a,&stack_b,len);
+		if(ac >= 10)
+		{
+			replicar_struct(&replica_stack,stack_a);
+			organizar_replica(&replica_stack);
+			get_geral_dividido(&geral,replica_stack,len);
+			dividir_stack_b(&stack_a,&stack_b,&geral,len);
+			start_organizar(&stack_a,&stack_b,len);
+		}
+		else if(ac >=4)
+			organizar_stack_5(&stack_a,&stack_b);
+		else if(ac == 3)
+			organizar_stack_3(&stack_a);
+		//printar_struct(stack_a);
 		//organizar_stack_b_a(&stack_a,&stack_b,len);
 	}
 }

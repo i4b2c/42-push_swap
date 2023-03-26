@@ -105,14 +105,9 @@ void printar_geral(t_geral **geral)
 void get_len(t_len *len,int ac)
 {
 	int raiz;
-	int raiz2;
 	ft_raiz(&raiz,ac);
-	ft_raiz(&raiz2,raiz);
 	len->raiz = raiz;
-	if(ac > 20)
-		len->divisao_stack = ac/(raiz+(raiz2*2));
-	else
-		len->divisao_stack = ac/(raiz+(raiz2/2));
+	len->divisao_stack = ac/(raiz);
 	len->elementos_stack = ac/len->divisao_stack;
 	len->ultimo_elementos = (len->elementos_stack+ac-(len->elementos_stack*len->divisao_stack));
 }
