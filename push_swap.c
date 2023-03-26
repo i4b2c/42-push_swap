@@ -461,31 +461,15 @@ void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_l
 	ft_pa(stack_a, stack_b);
 	printf("pb\n");
 }
-/*
-void organizar_stack_b_a(t_stack **stack_a, t_stack **stack_b, t_len len)
-{
-	int i;
-	int cont;
 
-	i = 0;
-	while(stack_b != NULL)
+void simple_sa(t_stack **stack)
+{
+	if((*stack)->valor > (*stack)->next->valor)
 	{
-		while(i <= len.divisao_stack)
-		{
-			if(i == 0)
-				cont = len.ultimo_elementos;
-			else
-				cont = len.elementos_stack;
-			while(cont > 0)
-			{
-				//if()
-				break;
-			}
-		}
-		i++;
+		ft_sa(stack);
+		ft_printf("sa\n");
 	}
 }
-*/
 
 int main(int ac, char **av)
 {
@@ -499,11 +483,13 @@ int main(int ac, char **av)
 	stack_b = NULL;
 	geral = NULL;
 	replica_stack = NULL;
-	if(len.ac >= 3 && verificar_repitida(av) == 0)
+	if(len.ac >= 2 && verificar_repitida(av) == 0)
 	{
 		dar_valor_a(&stack_a,av);
 		get_len(&len,ac-1);
-		if(ac >= 10)
+		if(ac == 3)
+			simple_sa(&stack_a);
+		if(ac >= 10 && verificar_organizado(stack_a) == 1)
 		{
 			replicar_struct(&replica_stack,stack_a);
 			organizar_replica(&replica_stack);
@@ -511,11 +497,9 @@ int main(int ac, char **av)
 			dividir_stack_b(&stack_a,&stack_b,&geral,len);
 			start_organizar(&stack_a,&stack_b,len);
 		}
-		else if(ac >=4)
+		else if(ac > 4)
 			organizar_stack_5(&stack_a,&stack_b);
-		else if(ac == 3)
+		else if(ac >= 2)
 			organizar_stack_3(&stack_a);
-		//printar_struct(stack_a);
-		//organizar_stack_b_a(&stack_a,&stack_b,len);
 	}
 }
