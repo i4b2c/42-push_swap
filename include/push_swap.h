@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:00:41 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/27 20:29:37 by marvin           ###   ########.fr       */
+/*   Updated: 2023/03/29 03:48:24 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,9 @@ void organizar_replica(t_stack **stack);
 
 //stack_b.c
 void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_len len);
+
+//erro.c//
+void free_todos(t_stack **stack_a,t_stack **replica,t_geral **geral);
+void free_while(t_stack **stack);
 
 #endif

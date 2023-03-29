@@ -36,6 +36,7 @@ void get_geral_dividido(t_geral **geral, t_stack *stack , t_len len)
 	{
 		temp = malloc(sizeof(t_geral));
 		temp->stack = NULL;
+		temp->next = NULL;
 		if(count == raio-1)
 			i = len.elementos_stack+(len.ac-(len.elementos_stack*len.divisao_stack));
 		else

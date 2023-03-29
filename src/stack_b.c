@@ -25,10 +25,13 @@ void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_l
 	{
 		if(*stack_a)
 		{
-			if (verificar_valor_na_stack(temp->stack, (*stack_a)->valor) == 1) {
+			if (verificar_valor_na_stack(temp->stack, (*stack_a)->valor) == 1)
+			{
 				ft_pb(stack_a, stack_b);
 				i++;
-			} else {
+			}
+			else
+			{
 					ft_ra(stack_a);
 			}
 		}

@@ -15,12 +15,10 @@
 void ft_sa(t_stack **stack)
 {
 	int temp;
-	t_stack *new;
-	new = malloc(sizeof(t_stack));
-	new = *stack;
-	temp = new->valor;
-	new->valor = new->next->valor;
-	new->next->valor = temp;
+
+	temp = (*stack)->valor;
+	(*stack)->valor = (*stack)->next->valor;
+	(*stack)->next->valor = temp;
 	ft_printf("sa\n");
 }
 
@@ -31,8 +29,6 @@ void ft_ra(t_stack **stack)
 	t_stack *new;
 	t_stack *primeiro_no;
 
-	new = malloc(sizeof(t_stack));
-	primeiro_no = malloc(sizeof(t_stack));
 	new = *stack;
 	primeiro_no = new;
 	while(new->next != NULL)
@@ -51,9 +47,6 @@ void ft_rra(t_stack **stack)
 	t_stack *ultimo_no;
 	t_stack *penultimo_no;
 
-	new = malloc(sizeof(t_stack));
-	ultimo_no = malloc(sizeof(t_stack));
-	penultimo_no = malloc(sizeof(t_stack));
 	new = *stack;
 	while(new->next != NULL)
 	{

@@ -28,7 +28,7 @@ void	adicionar_fim(t_stack **stack, int valor)
 	t_stack *temp;
 
 	novo = malloc(sizeof(t_stack));
-	temp = malloc(sizeof(t_stack));
+	//temp = malloc(sizeof(t_stack));
 	novo->valor = valor;
 	novo->next = NULL;
 	if (*stack == NULL)
