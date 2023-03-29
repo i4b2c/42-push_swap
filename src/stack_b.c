@@ -12,18 +12,18 @@
 
 #include "../include/push_swap.h"
 
-void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_len len)
+void	dividir_b(t_stack **stack_a, t_stack **stack_b, t_geral **g, t_len len)
 {
-	t_geral *temp;
-	int i;
-	int len_d;
+	t_geral	*temp;
+	int		i;
+	int		len_d;
 
-	temp = *geral;
+	temp = *g;
 	i = 0;
 	len_d = 0;
-	while(temp != NULL && *stack_a != NULL)
+	while (temp != NULL && *stack_a != NULL)
 	{
-		if(*stack_a)
+		if (*stack_a)
 		{
 			if (verificar_valor_na_stack(temp->stack, (*stack_a)->valor) == 1)
 			{
@@ -32,12 +32,12 @@ void dividir_stack_b(t_stack **stack_a , t_stack **stack_b,t_geral **geral , t_l
 			}
 			else
 			{
-					ft_ra(stack_a);
+				ft_ra(stack_a);
 			}
 		}
-		if(i == len.elementos_stack)
+		if (i == len.elementos_stack)
 		{
-			if(len_d + 1 != len.divisao_stack)
+			if (len_d + 1 != len.divisao_stack)
 			{
 				temp = temp->next;
 				i = 0;

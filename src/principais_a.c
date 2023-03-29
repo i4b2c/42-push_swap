@@ -12,9 +12,9 @@
 
 #include "../include/push_swap.h"
 
-void ft_sa(t_stack **stack)
+void	ft_sa(t_stack **stack)
 {
-	int temp;
+	int	temp;
 
 	temp = (*stack)->valor;
 	(*stack)->valor = (*stack)->next->valor;
@@ -22,16 +22,16 @@ void ft_sa(t_stack **stack)
 	ft_printf("sa\n");
 }
 
-void ft_ra(t_stack **stack)
+void	ft_ra(t_stack **stack)
 {
-	if(*stack == NULL || (*stack)->next == NULL)
-		return ;
-	t_stack *new;
-	t_stack *primeiro_no;
+	t_stack	*new;
+	t_stack	*primeiro_no;
 
+	if (*stack == NULL || (*stack)->next == NULL)
+		return ;
 	new = *stack;
 	primeiro_no = new;
-	while(new->next != NULL)
+	while (new->next != NULL)
 		new = new->next;
 	new->next = primeiro_no;
 	*stack = (*stack)->next;
@@ -39,18 +39,18 @@ void ft_ra(t_stack **stack)
 	ft_printf("ra\n");
 }
 
-void ft_rra(t_stack **stack)
+void	ft_rra(t_stack **stack)
 {
-	if(*stack == NULL || (*stack)->next == NULL)
-		return;
-	t_stack *new;
-	t_stack *ultimo_no;
-	t_stack *penultimo_no;
+	t_stack	*new;
+	t_stack	*ultimo_no;
+	t_stack	*penultimo_no;
 
+	if (*stack == NULL || (*stack)->next == NULL)
+		return ;
 	new = *stack;
-	while(new->next != NULL)
+	while (new->next != NULL)
 	{
-		if(new->next != NULL && new->next->next == NULL)
+		if (new->next != NULL && new->next->next == NULL)
 			penultimo_no = new;
 		new = new->next;
 	}
@@ -61,17 +61,17 @@ void ft_rra(t_stack **stack)
 	ft_printf("rra\n");
 }
 
-void ft_pa(t_stack **stack_a, t_stack **stack_b)
+void	ft_pa(t_stack **stack_a, t_stack **stack_b)
 {
-	if(*stack_a == NULL)
-		return;
-	adicionar_inicio(stack_b,(*stack_a)->valor);
+	if (*stack_a == NULL)
+		return ;
+	adicionar_inicio(stack_b, (*stack_a)->valor);
 	remover_primeiro(stack_a);
 	ft_printf("pa\n");
 }
 
-void simple_sa(t_stack **stack)
+void	simple_sa(t_stack **stack)
 {
-	if((*stack)->valor > (*stack)->next->valor)
+	if ((*stack)->valor > (*stack)->next->valor)
 		ft_sa(stack);
 }

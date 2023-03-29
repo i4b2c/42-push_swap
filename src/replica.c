@@ -12,35 +12,35 @@
 
 #include "../include/push_swap.h"
 
-void replicar_struct(t_stack **replica,t_stack *stack)
+void	replicar_struct(t_stack **replica, t_stack *stack)
 {
-	if(stack != NULL)
+	if (stack != NULL)
 	{
-		while(stack->next != NULL)
+		while (stack->next != NULL)
 		{
-			adicionar_fim(replica,stack->valor);
+			adicionar_fim(replica, stack->valor);
 			stack = stack->next;
 		}
-		adicionar_fim(replica,stack->valor);
+		adicionar_fim(replica, stack->valor);
 	}
 }
 
-void organizar_replica(t_stack **stack)
+void	organizar_replica(t_stack **stack)
 {
-	t_stack *temp;
-	int temp_valor;
+	t_stack	*temp;
+	int		temp_valor;
 
 	temp = NULL;
-	while(1)
+	while (1)
 	{
 		temp = *stack;
-		if(verificar_organizado(*stack)==0)
-			break;
+		if (verificar_organizado(*stack) == 0)
+			break ;
 		else
 		{
-			while(temp->next != NULL)
+			while (temp->next != NULL)
 			{
-				if(temp->valor > temp->next->valor)
+				if (temp->valor > temp->next->valor)
 				{
 					temp_valor = temp->valor;
 					temp->valor = temp->next->valor;

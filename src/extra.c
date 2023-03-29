@@ -14,7 +14,7 @@
 
 long long int	ft_atoll(const char *str)
 {
-	long long int	result;
+	long long int			result;
 	int						sign;
 
 	result = 0;
@@ -35,14 +35,15 @@ long long int	ft_atoll(const char *str)
 	return ((long long int)result * sign);
 }
 
-void ft_raiz(int *raiz,int ac)
+void	ft_raiz(int *raiz, int ac)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	ac--;
-	while(1)
+	while (1)
 	{
-		if(i * i >= ac)
+		if (i * i >= ac)
 		{
 			*raiz = i;
 			return ;

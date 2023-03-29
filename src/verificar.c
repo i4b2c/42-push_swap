@@ -66,27 +66,26 @@ int	verificar_stack_b(t_stack *stack)
 	return (1);
 }
 
-int verificar_repitida(char **str)
+int	verificar_repitida(char **str)
 {
-	long long int temp;
-
-	int i;
-	int j;
+	long long int	temp;
+	int				i;
+	int				j;
 
 	i = 1;
-	while(str[i] != NULL)
+	while (str[i] != NULL)
 	{
 		j = 1;
 		temp = ft_atoll(str[i]);
-		if(temp > INT_MAX || temp < INT_MIN)
-			return 1;
-		while(str[j] != NULL)
+		if (temp > INT_MAX || temp < INT_MIN)
+			return (1);
+		while (str[j] != NULL)
 		{
-			if(i != j && temp == ft_atoll(str[j]))
-				return 1;
+			if (i != j && temp == ft_atoll(str[j]))
+				return (1);
 			j++;
 		}
 		i++;
 	}
-	return 0;
+	return (0);
 }

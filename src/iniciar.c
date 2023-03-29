@@ -12,14 +12,14 @@
 
 #include "../include/push_swap.h"
 
-void dar_valor_a(t_stack **stack,char **av)
+void	dar_valor_a(t_stack **stack, char **av)
 {
-	int i;
+	int	i;
 
 	i = 1;
-	while(av[i] != NULL)
+	while (av[i] != NULL)
 	{
-		adicionar_fim(stack,ft_atoi(av[i]));
+		adicionar_fim(stack, ft_atoi(av[i]));
 		i++;
 	}
 }

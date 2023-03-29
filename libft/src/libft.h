@@ -13,9 +13,9 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-#ifndef BUFFER_SIZE
-#define BUFFER_SIZE 100
-#endif
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 100
+# endif
 
 # include <string.h>
 # include <stdio.h>
@@ -25,7 +25,8 @@
 # include <stdarg.h>
 # include <stdint.h>
 # include <inttypes.h>
-#include <fcntl.h>
+# include <fcntl.h>
+# include <limits.h>
 
 typedef struct s_list
 {
@@ -93,9 +94,9 @@ char			ft_ptr_hexa(int n);
 t_list			*ft_lstnew(void *content);
 t_list			*ft_lstlast(t_list *lst);
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void*));
-char	*get_next_line(int x);
-char	*get_str(int x, char *y);
-char	*get_new_str(char *x);
-char	*get_line(char *x);
+char			*get_next_line(int x);
+char			*get_str(int x, char *y);
+char			*get_new_str(char *x);
+char			*get_line(char *x);
 
 #endif

@@ -24,11 +24,10 @@ void	adicionar_inicio(t_stack **stack, int valor)
 
 void	adicionar_fim(t_stack **stack, int valor)
 {
-	t_stack *novo;
-	t_stack *temp;
+	t_stack	*novo;
+	t_stack	*temp;
 
 	novo = malloc(sizeof(t_stack));
-	//temp = malloc(sizeof(t_stack));
 	novo->valor = valor;
 	novo->next = NULL;
 	if (*stack == NULL)
@@ -44,9 +43,11 @@ void	adicionar_fim(t_stack **stack, int valor)
 
 void	remover_primeiro(t_stack **stack)
 {
+	t_stack	*new;
+
 	if (*stack != NULL)
 	{
-		t_stack *new = *stack;
+		new = *stack;
 		*stack = (*stack)->next;
 		free (new);
 	}

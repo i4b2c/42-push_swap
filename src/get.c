@@ -12,45 +12,50 @@
 
 #include "../include/push_swap.h"
 
-void get_len(t_len *len,int ac)
+void	get_len(t_len *len, int ac)
 {
-	int raiz;
-	ft_raiz(&raiz,ac);
+	int	raiz;
+
+	ft_raiz(&raiz, ac);
 	len->raiz = raiz;
-	len->divisao_stack = ac/(raiz);
-	len->elementos_stack = ac/len->divisao_stack;
-	len->ultimo_elementos = (len->elementos_stack+ac-(len->elementos_stack*len->divisao_stack));
+	len->divisao_stack = ac / (raiz);
+	len->elementos_stack = ac / len->divisao_stack;
+	len->ultimo_elementos = (len->elementos_stack + ac
+			- (len->elementos_stack * len->divisao_stack));
 }
 
-void get_geral_dividido(t_geral **geral, t_stack *stack , t_len len)
+void	get_geral_dividido(t_geral **geral, t_stack *stack, t_len len)
 {
-	int raio = len.divisao_stack;
-	int elementos = len.ac/raio;
-	int count = 0;
-	t_geral *novo = NULL;
-	t_geral *atual = NULL;
-	t_geral *temp = NULL;
-	int i;
+	int		count;
+	int		i;
+	t_geral	*novo;
+	t_geral	*atual;
+	t_geral	*temp;
 
-	while(count < raio)
+	count = 0;
+	novo = NULL;
+	atual = NULL;
+	temp = NULL;
+	while (count < len.divisao_stack)
 	{
-		temp = malloc(sizeof(t_geral));
+		temp = malloc (sizeof(t_geral));
 		temp->stack = NULL;
 		temp->next = NULL;
-		if(count == raio-1)
-			i = len.elementos_stack+(len.ac-(len.elementos_stack*len.divisao_stack));
+		if (count == len.divisao_stack - 1)
+			i = len.elementos_stack
+				+ (len.ac - (len.elementos_stack * len.divisao_stack));
 		else
-			i = elementos;
-		while(i > 0)
+			i = len.elementos_stack;
+		while (i > 0)
 		{
-			if(stack != NULL)
+			if (stack != NULL)
 			{
-				adicionar_fim(&temp->stack,stack->valor);
+				adicionar_fim(&temp->stack, stack->valor);
 				stack = stack->next;
 			}
 			i--;
 		}
-		if(novo == NULL)
+		if (novo == NULL)
 		{
 			novo = temp;
 			atual = novo;
