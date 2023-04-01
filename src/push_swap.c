@@ -35,7 +35,7 @@ void	iniciar_basico(t_stack **s_a, t_stack **s_b, t_geral **g, t_stack **r)
 
 void	fechar(void)
 {
-	ft_printf("Error\n");
+	write(2,"Error\n",6);
 	exit (0);
 }
 
