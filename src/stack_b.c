@@ -12,6 +12,17 @@
 
 #include "../include/push_swap.h"
 
+void	logica_simples(t_geral *t, t_stack **stack_a, t_stack **stack_b, int *i)
+{
+	if (verificar_valor_na_stack(t->stack, (*stack_a)->valor) == 1)
+	{
+		ft_pb(stack_a, stack_b);
+		(*i)++;
+	}
+	else
+		ft_ra(stack_a);
+}
+
 void	dividir_b(t_stack **stack_a, t_stack **stack_b, t_geral **g, t_len len)
 {
 	t_geral	*temp;
@@ -24,17 +35,7 @@ void	dividir_b(t_stack **stack_a, t_stack **stack_b, t_geral **g, t_len len)
 	while (temp != NULL && *stack_a != NULL)
 	{
 		if (*stack_a)
-		{
-			if (verificar_valor_na_stack(temp->stack, (*stack_a)->valor) == 1)
-			{
-				ft_pb(stack_a, stack_b);
-				i++;
-			}
-			else
-			{
-				ft_ra(stack_a);
-			}
-		}
+			logica_simples(temp, stack_a, stack_b, &i);
 		if (i == len.elementos_stack)
 		{
 			if (len_d + 1 != len.divisao_stack)

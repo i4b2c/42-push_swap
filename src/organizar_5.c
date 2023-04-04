@@ -12,6 +12,22 @@
 
 #include "../include/push_swap.h"
 
+void	escolher_logica_5(t_stack **stack_a, t_stack **stack_b)
+{
+	if ((*stack_b)->next && (*stack_b)->valor < (*stack_b)->next->valor)
+		ft_sb(stack_b);
+	else if ((*stack_b)->next
+		&& valor_do_ultimo(*stack_b) > (*stack_b)->valor)
+	{
+		if ((*stack_b)->valor > (*stack_b)->next->valor)
+			ft_rrb(stack_b);
+		else
+			ft_rb(stack_b);
+	}
+	else if (verificar_organizado(*stack_a) == 0)
+		ft_pa(stack_b, stack_a);
+}
+
 void	organizar(t_stack **stack_a, t_stack **stack_b)
 {
 	if ((*stack_a)->valor > (*stack_a)->next->valor
@@ -30,20 +46,7 @@ void	organizar(t_stack **stack_a, t_stack **stack_b)
 		&& verificar_organizado(*stack_a) == 1)
 		ft_pb(stack_a, stack_b);
 	if (*stack_b)
-	{
-		if ((*stack_b)->next && (*stack_b)->valor < (*stack_b)->next->valor)
-			ft_sb(stack_b);
-		else if ((*stack_b)->next
-			&& valor_do_ultimo(*stack_b) > (*stack_b)->valor)
-		{
-			if ((*stack_b)->valor > (*stack_b)->next->valor)
-				ft_rrb(stack_b);
-			else
-				ft_rb(stack_b);
-		}
-		else if (verificar_organizado(*stack_a) == 0)
-			ft_pa(stack_b, stack_a);
-	}
+		escolher_logica_5(stack_a, stack_b);
 }
 
 void	organizar_stack_5(t_stack **stack_a, t_stack **stack_b)

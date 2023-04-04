@@ -32,39 +32,21 @@ void	get_geral_dividido(t_geral **geral, t_stack *stack, t_len len)
 	t_geral	*atual;
 	t_geral	*temp;
 
-	count = 0;
-	novo = NULL;
-	atual = NULL;
-	temp = NULL;
+	get_geral_iniciar(&count, &novo, &atual);
 	while (count < len.divisao_stack)
 	{
-		temp = malloc (sizeof(t_geral));
-		temp->stack = NULL;
-		temp->next = NULL;
-		if (count == len.divisao_stack - 1)
-			i = len.elementos_stack
-				+ (len.ac - (len.elementos_stack * len.divisao_stack));
-		else
-			i = len.elementos_stack;
+		criar_temp(&temp);
+		get_i(len, &i, count);
 		while (i > 0)
 		{
-			if (stack != NULL)
-			{
-				adicionar_fim(&temp->stack, stack->valor);
-				stack = stack->next;
-			}
+			adicionar_fim(&temp->stack, stack->valor);
+			stack = stack->next;
 			i--;
 		}
 		if (novo == NULL)
-		{
-			novo = temp;
-			atual = novo;
-		}
+			colocar_inicio(&novo, &atual, temp);
 		else
-		{
-			atual->next = temp;
-			atual = atual->next;
-		}
+			continua_atual(&atual, temp);
 		count++;
 	}
 	*geral = novo;

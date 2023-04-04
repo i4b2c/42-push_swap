@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:00:41 by marvin            #+#    #+#             */
-/*   Updated: 2023/03/29 05:37:24 by marvin           ###   ########.fr       */
+/*   Updated: 2023/04/04 12:29:10 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,26 @@ int					verificar_stack_b(t_stack *stack);
 int					verificar_repitida(char **str);
 
 //geral.c//
+void				escolher_rotacao(t_stack **s_a, int *cont, int op);
 void				start_organizar(t_stack **s_a, t_stack **s_b, t_len l);
+void				geral_loop(t_stack **s_a, t_stack **s_b, int *l, int *c);
+
+//geral_extra.c//
+void				check(t_stack **s_a, int op, int *cont);
+void				valores_max(t_stack **s_a, t_stack **s_b, int *l, int *c);
+void				valores_max_prox(t_stack **a, t_stack **b, int *l, int *c);
+void				valores_max_ultimo(t_stack **s_a, t_stack **s_b, int *len);
 
 //get.c//
 void				get_len(t_len *len, int ac);
 void				get_geral_dividido(t_geral **g, t_stack *s, t_len l);
+
+//get_extra.c//
+void				continua_atual(t_geral **atual, t_geral *temp);
+void				colocar_inicio(t_geral **n, t_geral **a, t_geral *t);
+void				get_i(t_len len, int *i, int count);
+void				get_geral_iniciar(int *c, t_geral **n, t_geral **a);
+void				criar_temp(t_geral **temp);
 
 //replica.c//
 void				replicar_struct(t_stack **replica, t_stack *stack);
