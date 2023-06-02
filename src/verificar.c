@@ -36,7 +36,10 @@ int	verificar_non_numberic(char **str)
 		j = 0;
 		while (str[i][j])
 		{
-			if (str[i][0] != '-'
+			if (str[i][0] == '-'
+				&& !(str[i][1] <= 9 && str[i][1] >= 0))
+				return (1);
+			else if (str[i][0] != '-'
 				&& !(str[i][0] <= '9' && str[i][0] >= '0'))
 				return (1);
 			else if (j != 0 && !(str[i][j] <= '9' && str[i][j] >= '0'))
