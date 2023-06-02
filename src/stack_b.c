@@ -51,9 +51,11 @@ int verificar_melhor_caminho(t_geral *temp, t_stack **stack_a)
 	int res_ra;
 	int res_rra;
 
+	res_ra = 0;
+	res_rra = 0;
 	res_ra = verificar_ra(temp, stack_a);
 	res_rra = verificar_rra(temp, stack_a);
-	return (res_ra-res_rra);
+	return (res_ra - res_rra);
 }
 
 void	logica_simples(t_geral *t, t_stack **stack_a, t_stack **stack_b, int *i)
@@ -67,9 +69,9 @@ void	logica_simples(t_geral *t, t_stack **stack_a, t_stack **stack_b, int *i)
 	{
 		//esta area esta com infinite loop , nao sei porque ainda
 		//if(verificar_melhor_caminho(t,stack_a) < 0)
-		//	ft_ra(stack_a);
+			ft_ra(stack_a);
 		//else
-			ft_rra(stack_a);
+		//		ft_rra(stack_a);
 	}
 }
 
