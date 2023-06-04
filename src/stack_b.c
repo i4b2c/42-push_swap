@@ -12,6 +12,45 @@
 
 #include "../include/push_swap.h"
 
+int verificar_melhor_caminho(t_geral *temp, t_stack **stack_a,int op);
+
+void	ft_ra_no_print(t_stack **stack)
+{
+	t_stack	*new;
+	t_stack	*primeiro_no;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+		return ;
+	new = *stack;
+	primeiro_no = new;
+	while (new->next != NULL)
+		new = new->next;
+	new->next = primeiro_no;
+	*stack = (*stack)->next;
+	primeiro_no->next = NULL;
+}
+
+void	ft_rra_no_print(t_stack **stack)
+{
+	t_stack	*new;
+	t_stack	*ultimo_no;
+	t_stack	*penultimo_no;
+
+	if (*stack == NULL || (*stack)->next == NULL)
+		return ;
+	new = *stack;
+	while (new->next != NULL)
+	{
+		if (new->next != NULL && new->next->next == NULL)
+			penultimo_no = new;
+		new = new->next;
+	}
+	ultimo_no = new;
+	penultimo_no->next = NULL;
+	ultimo_no->next = *stack;
+	*stack = ultimo_no;
+}
+
 int verificar_ra(t_geral *temp, t_stack **stack_a)
 {
 	int res;
@@ -46,48 +85,117 @@ int verificar_rra(t_geral *temp, t_stack **stack_a)
 	return res;
 }
 
-int verificar_melhor_caminho(t_geral *temp, t_stack **stack_a,int op)
+int getLenStruct(t_stack **stack)
 {
-	int res_ra;
-	int res_rra;
+	t_stack *temp;
+	int i;
 
-	res_ra = 0;
-	res_rra = 0;
-	res_ra = verificar_ra(temp, stack_a);
-	res_rra = verificar_rra(temp, stack_a);
-	if (op == 1)
-		return (res_ra);
-	return (res_rra);
+	i = 0;
+	temp = *stack;
+	while(temp != NULL)
+	{
+		i++;
+		temp = temp->next;
+	}
+	return i;
+}
+
+void replicarStack(t_stack **temp, t_stack **stack)
+{
+	t_stack *tempStack;
+
+	tempStack = *stack;
+	while(tempStack != NULL)
+	{
+		adicionar_fim(temp,tempStack->valor);
+		tempStack = tempStack->next;
+	}
+}
+
+int verificarMelhorCaminhoRa(t_geral *geral,t_stack **stack)
+{
+	t_stack *temp;
+	int i;
+	int len;
+
+	temp = *stack;
+	len = getLenStruct(stack);
+	i = 0;
+	while(i < len)
+	{
+		if(verificar_valor_na_stack(geral->stack,temp->valor) == 1)
+			break;
+		temp = temp->next;
+		i++;
+	}
+	return i;
+
+}
+
+int verificarMelhorCaminhoRra(t_geral *geral,t_stack **stack)
+{
+	t_stack *temp;
+	int i;
+	int j;
+	int len;
+
+	temp = *stack;
+	len = getLenStruct(stack);
+	i = 0;
+	j = 0;
+	while(i < len)
+	{
+		if(verificar_valor_na_stack(geral->stack,temp->valor) == 1)
+			j = i;
+		temp = temp->next;
+		i++;
+	}
+	return (len-j);
+
 }
 
 void	logica_simples(t_geral *t, t_stack **stack_a, t_stack **stack_b, int *i)
 {
-	//int res;
-	//int res2;
+	int res;
+	int res2;
 
-	//res = 0;
-	//res2 = 0;
+	res = 0;
+	res2 = 0;
 	if (verificar_valor_na_stack(t->stack, (*stack_a)->valor) == 1)
 	{
 		ft_pb(stack_a, stack_b);
 		(*i)++;
 	}
-	else//aqui onde tenho que verificar qual o melhor
+	else
 	{
-		/*
-		//esta area esta com infinite loop , nao sei porque ainda
-			res = verificar_melhor_caminho(t,stack_a,1);
-			res2 = verificar_melhor_caminho(t,stack_a,2);
-			while(res > 0 && res2 > 0)
+		res = verificarMelhorCaminhoRa(t,stack_a);
+		res2 = verificarMelhorCaminhoRra(t,stack_a);
+		if(res <= res2)
+		{
+			while(res > 0)
 			{
-				if(res < res2)
-					ft_ra(stack_a);
-				else
-					ft_rra(stack_a);
+				if (verificar_valor_na_stack(t->stack, (*stack_a)->valor) == 1)
+				{
+					ft_pb(stack_a, stack_b);
+					(*i)++;
+				}
 				res--;
+				ft_ra(stack_a);
+			}
+		}
+		else
+		{
+			while(res2 > 0)
+			{
+				if (verificar_valor_na_stack(t->stack, (*stack_a)->valor) == 1)
+				{
+					ft_pb(stack_a, stack_b);
+					(*i)++;
+				}
 				res2--;
-			}*/
-		ft_ra(stack_a);
+		 		ft_rra(stack_a);
+			}
+		}
 	}
 }
 

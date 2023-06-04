@@ -18,7 +18,10 @@ void	get_len(t_len *len, int ac)
 
 	ft_raiz(&raiz, ac);
 	len->raiz = raiz;
-	len->divisao_stack = ac / (raiz);
+	if (ac <= 200)
+		len->divisao_stack = ac / raiz;
+	else
+		len->divisao_stack = (ac / raiz) - 2;
 	len->elementos_stack = ac / len->divisao_stack;
 	len->ultimo_elementos = (len->elementos_stack + ac
 			- (len->elementos_stack * len->divisao_stack));
