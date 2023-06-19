@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:00:41 by marvin            #+#    #+#             */
-/*   Updated: 2023/04/04 12:29:10 by marvin           ###   ########.fr       */
+/*   Updated: 2023/06/15 15:36:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ typedef struct d_len
 	int	divisao_stack;
 	int	ultimo_elementos;
 	int	elementos_stack;
+	int media;
+	int len_geral;
 }	t_len;
 
 //verificar.c//
