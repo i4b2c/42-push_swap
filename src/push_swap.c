@@ -58,19 +58,17 @@ void get_media_len(t_len *len,t_stack *stack)
 
 void send_media_small(t_len *len,t_stack **stack_a,t_stack **stack_b)
 {
-	t_stack *temp;
 	int i = 0;
 
-	temp = *stack_a;
 	while(i < (((len->len_geral/2)*len->elementos_stack)))
 	{
-		if(temp->valor <= len->media)
+		if((*stack_a)->valor <= len->media)
 		{
-			ft_pb(&temp,stack_b);
+			ft_pb(stack_a,stack_b);
 			i++;
 		}
 		else
-			ft_ra(&temp);
+			ft_ra(stack_a);
 	}
 }
 
@@ -129,11 +127,30 @@ int verificar_smalla(int valor,int len,t_geral *geral)
 	return 0;
 }
 
+int encontrar_media(t_stack *stack,int media)
+{
+	t_stack *temp;
+
+	temp = stack;
+	while(temp != NULL)
+	{
+		if(temp->valor == media)
+			return 1;
+		temp = temp->next;
+	}
+	return 0;
+}
+
 void separar_por_grupo_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
 {
 	int i_geral_len;
 	int i_geral;
 
+	while(encontrar_media(geral->stack,len->media) != 1)
+		geral = geral->next;
+	//printar_geral(geral);
+	//printf("len %d, media %d\n",len->len_geral/2,len->media);
+	//return ;
 	i_geral = len->len_geral/2;
 	i_geral_len = len->elementos_stack;
 	while ((*stack_b) != NULL)
@@ -167,6 +184,19 @@ void printar_struct(t_stack *stack)
 	printf("\n");
 }
 
+int	verificar_organizado_reverso(t_stack *stack)
+{
+	if (!stack)
+		return (1);
+	while (stack->next != NULL)
+	{
+		if (stack->valor <= stack->next->valor)
+			return (1);
+		stack = stack->next;
+	}
+	return (0);
+}
+
 void	organizar_replica_reverso(t_stack **stack)
 {
 	t_stack	*temp;
@@ -176,7 +206,7 @@ void	organizar_replica_reverso(t_stack **stack)
 	while (1)
 	{
 		temp = *stack;
-		if (verificar_organizado(*stack) == 0)
+		if (verificar_organizado_reverso(*stack) == 0)
 			break ;
 		else
 		{
@@ -196,13 +226,20 @@ void	organizar_replica_reverso(t_stack **stack)
 
 void replicar_struct_abaixo_media(t_stack **replica,t_stack *stack)
 {
-	while(stack != NULL)
-	{
-		printf("%d\n",stack->valor);
-		//tenho que colocar um if para abaixo da media ...
-		adicionar_inicio(replica,stack->valor);
-		stack = stack->next;
-	}
+	(void)replica;
+	(void)stack;
+	printf("ok");
+	//printar_struct(stack);
+	// while(stack->next != NULL)
+	// {
+
+	// 	printf("%d\n",stack->valor);
+	// 	//tenho que colocar um if para abaixo da media ...
+	// 	adicionar_inicio(replica,stack->valor);
+	// 	sleep(10);
+	// 	stack = stack->next;
+	// }
+	// printar_struct(*replica);
 	//organizar_replica_reverso(replica);
 }
 
@@ -213,9 +250,12 @@ void organizar_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *ger
 	int i = ((len->elementos_stack/2)*len->elementos_stack);
 	int op = 0;
 
-	replicar_struct_abaixo_media(&replica,*stack_a);
+	//printar_struct(*stack_a);
+	//replicar_struct_abaixo_media(&replica,*stack_a);
+	return ;
 	while(replica != NULL)
 	{
+		break;
 		if(replica->valor == (*stack_a)->valor)
 		{
 			remover_primeiro(&replica);
@@ -244,27 +284,80 @@ void organizar_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *ger
 
 // }
 
+void	get_i_reverso(t_len len, int *i, int count)
+{
+	if (count == 0)
+		*i = len.elementos_stack
+			+ (len.ac - (len.elementos_stack * len.divisao_stack));
+	else
+		*i = len.elementos_stack;
+}
+
+void	get_geral_dividido_reverso(t_geral **geral, t_stack *stack, t_len len)
+{
+	int		count;
+	int		i;
+	t_geral	*novo;
+	t_geral	*atual;
+	t_geral	*temp;
+
+	get_geral_iniciar(&count, &novo, &atual);
+	while (count < len.divisao_stack)
+	{
+		criar_temp(&temp);
+		get_i_reverso(len, &i, count);
+		while (i > 0)
+		{
+			adicionar_fim(&temp->stack, stack->valor);
+			stack = stack->next;
+			i--;
+		}
+		if (novo == NULL)
+			colocar_inicio(&novo, &atual, temp);
+		else
+			continua_atual(&atual, temp);
+		count++;
+	}
+	*geral = novo;
+}
+
 void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 {
 	t_stack	*stack_b;
+	t_geral *geral;
+	t_stack *replica;
 
+	replica = calloc(1,sizeof(t_stack));
+	geral = malloc(sizeof(t_geral));
+
+	replica = NULL;
+	geral = NULL;
 	stack_b = NULL;
 
 	replicar_struct(r, *s_a);
+	replicar_struct(&replica, *s_a);
 	organizar_replica(r);
+	organizar_replica_reverso(&replica);
 	get_len(l, l->ac);
 	get_geral_dividido(g, *r, *l);
+	get_geral_dividido_reverso(&geral, replica, *l);
 	get_len_geral(*g,l);
 	get_media_len(l,*r);
 	send_media_small(l,s_a,&stack_b);
-	separar_por_grupo_small(l,s_a,&stack_b,*g);
-	organizar_small(l,s_a,&stack_b,*g);
+	//printar_geral(geral);
+	//printar_geral(*g);
+	separar_por_grupo_small(l,s_a,&stack_b,geral);
+	//organizar_small(l,s_a,&stack_b,*g);
 	//separar_por_grupo_big(l,s_a,&stack_b,*g);
 	//organizar_big()
 	//mandar_big()
 	//mandar_small()
 	// printar_geral(*g);
+	// printf("")
+	// printf("media %d, len %d,le\n",l->media,l->elementos_stack);
+	// printf("stack A -> (acima da media)\n");
 	// printar_struct(*s_a);
+	// printf("stack B -> (abaixo da media)\n");
 	// printar_struct(stack_b);
 
 
