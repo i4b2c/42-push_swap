@@ -100,25 +100,6 @@ void printar_geral(t_geral *geral)
 	}
 }
 
-// int verificar_small(int valor,int len,t_geral *geral)
-// {
-// 	t_geral *temp;
-
-// 	temp = *geral;
-// 	while(len > 1)
-// 	{
-// 		temp = temp->next;
-// 		len--;
-// 	}
-// 	while(temp->stack != NULL)
-// 	{
-// 		if(verificar_valor_na_stack(temp->stack,valor))
-// 			return 1;
-// 		temp->stack = temp->stack->next;
-// 	}
-// 	return 0;
-// }
-
 int verificar_smalla(int valor,int len,t_geral *geral)
 {
 	(void)len;
@@ -148,9 +129,6 @@ void separar_por_grupo_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_ge
 
 	while(encontrar_media(geral->stack,len->media) != 1)
 		geral = geral->next;
-	//printar_geral(geral);
-	//printf("len %d, media %d\n",len->len_geral/2,len->media);
-	//return ;
 	i_geral = len->len_geral/2;
 	i_geral_len = len->elementos_stack;
 	while ((*stack_b) != NULL)
@@ -161,8 +139,6 @@ void separar_por_grupo_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_ge
 			geral = geral->next;
 			i_geral--;
 		}
-		if(geral == NULL)
-			break;
 		if(verificar_valor_na_stack(geral->stack,(*stack_b)->valor) == 1)
 		{
 			i_geral_len--;
@@ -279,11 +255,6 @@ void organizar_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *ger
 	}
 }
 
-// void separar_por_grupo_big()
-// {
-
-// }
-
 void	get_i_reverso(t_len len, int *i, int count)
 {
 	if (count == 0)
@@ -321,6 +292,42 @@ void	get_geral_dividido_reverso(t_geral **geral, t_stack *stack, t_len len)
 	*geral = novo;
 }
 
+void passar_pra_cima(t_len *len,t_stack **stack)
+{
+	int i;
+	static int count;
+	static int ini = 0;
+
+	if(ini == 0)
+	{
+		ini = 1;
+		count = len->len_geral/2;
+	}
+	get_i(*len,&i,count);
+	//printf("count : %d e %d e %d\n",count,i,len->len_geral);
+	count++;
+	while(i > 0)
+	{
+		ft_rra(stack);
+		i--;
+	}
+}
+
+void send_media_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
+{
+	(void)stack_b;
+	(void)geral;
+	int i;
+
+	i = len->len_geral/2;
+	while(i < len->len_geral)
+	{
+		passar_pra_cima(len,stack_a);
+		//comecar_organizar(len,stack_a,stack_b,geral);
+		i++;
+	}
+}
+
 void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 {
 	t_stack	*stack_b;
@@ -344,9 +351,8 @@ void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 	get_len_geral(*g,l);
 	get_media_len(l,*r);
 	send_media_small(l,s_a,&stack_b);
-	//printar_geral(geral);
-	//printar_geral(*g);
 	separar_por_grupo_small(l,s_a,&stack_b,geral);
+	send_media_big(l,s_a,&stack_b,geral);
 	//organizar_small(l,s_a,&stack_b,*g);
 	//separar_por_grupo_big(l,s_a,&stack_b,*g);
 	//organizar_big()
