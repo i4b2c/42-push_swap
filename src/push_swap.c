@@ -144,7 +144,7 @@ void separar_por_grupo_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_ge
 			geral = geral->next;
 			i_geral--;
 		}
-		if(i_geral == 0)
+		if(geral == NULL)
 			break;
 		if(verificar_valor_na_stack(geral->stack,(*stack_b)->valor) == 1)
 		{
@@ -167,16 +167,81 @@ void printar_struct(t_stack *stack)
 	printf("\n");
 }
 
-// void separar_por_grupo_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
-// {
-// 	(void)len;
-// 	(void)geral;
-// 	return ;
-// 	while((*stack_b)->next != NULL)
-// 	{
+void	organizar_replica_reverso(t_stack **stack)
+{
+	t_stack	*temp;
+	int		temp_valor;
 
-// 	}
-// 	ft_pa(stack_a,stack_b);
+	temp = NULL;
+	while (1)
+	{
+		temp = *stack;
+		if (verificar_organizado(*stack) == 0)
+			break ;
+		else
+		{
+			while (temp->next != NULL)
+			{
+				if (temp->valor < temp->next->valor)
+				{
+					temp_valor = temp->valor;
+					temp->valor = temp->next->valor;
+					temp->next->valor = temp_valor;
+				}
+				temp = temp->next;
+			}
+		}
+	}
+}
+
+void replicar_struct_abaixo_media(t_stack **replica,t_stack *stack)
+{
+	while(stack != NULL)
+	{
+		printf("%d\n",stack->valor);
+		//tenho que colocar um if para abaixo da media ...
+		adicionar_inicio(replica,stack->valor);
+		stack = stack->next;
+	}
+	//organizar_replica_reverso(replica);
+}
+
+void organizar_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
+{
+	(void)geral;
+	t_stack *replica;
+	int i = ((len->elementos_stack/2)*len->elementos_stack);
+	int op = 0;
+
+	replicar_struct_abaixo_media(&replica,*stack_a);
+	while(replica != NULL)
+	{
+		if(replica->valor == (*stack_a)->valor)
+		{
+			remover_primeiro(&replica);
+			ft_pb(stack_a,stack_b);
+		}
+		if(op == 0)
+		{
+			ft_ra(stack_a);
+			i--;
+		}
+		else if(op == 1)
+		{
+			ft_rra(stack_a);
+			i++;
+		}
+		if(i == 0)
+			op = 1;
+		else if(i == ((len->elementos_stack/2)*len->elementos_stack))
+			op = 0;
+		printf("%d\n",i);
+	}
+}
+
+// void separar_por_grupo_big()
+// {
+
 // }
 
 void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
@@ -193,9 +258,14 @@ void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 	get_media_len(l,*r);
 	send_media_small(l,s_a,&stack_b);
 	separar_por_grupo_small(l,s_a,&stack_b,*g);
-	//printar_geral(*g);
-	//printar_struct(*s_a);
-	//printar_struct(stack_b);
+	organizar_small(l,s_a,&stack_b,*g);
+	//separar_por_grupo_big(l,s_a,&stack_b,*g);
+	//organizar_big()
+	//mandar_big()
+	//mandar_small()
+	// printar_geral(*g);
+	// printar_struct(*s_a);
+	// printar_struct(stack_b);
 
 
 	// dividir_b(s_a, &stack_b, g, *l);
