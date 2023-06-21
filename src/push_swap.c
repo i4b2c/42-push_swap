@@ -25,8 +25,6 @@ void	organizar_10(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 	get_geral_dividido(g, *r, *l);
 	dividir_b(s_a, &stack_b, g, *l);
 	start_organizar(s_a, &stack_b, *l);
-	printar_struct(*s_a);
-	printar_struct(stack_b);
 }
 
 void	iniciar_basico(t_stack **s_a, t_stack **s_b, t_geral **g, t_stack **r)
@@ -48,7 +46,7 @@ void get_media_len(t_len *len,t_stack *stack)
 	int i;
 
 	i = 0;
-	while (stack != NULL && i < (((len->len_geral/2)*len->elementos_stack))-1)//certo
+	while (stack != NULL && i < (((len->len_geral/2)*len->elementos_stack))-1)
 	{
 		i++;
 		stack = stack->next;
@@ -86,15 +84,18 @@ void get_len_geral(t_geral *geral,t_len *len)
 void printar_geral(t_geral *geral)
 {
 	int i = 1;
-	while(geral != NULL)
+	t_geral *temp;
+
+	temp = geral;
+	while(temp != NULL)
 	{
 		printf("stack = %d\n",i);
-		while(geral->stack != NULL)
+		while(temp->stack != NULL)
 		{
-			printf("valor %d\n",geral->stack->valor);
-			geral->stack = geral->stack->next;
+			printf("valor %d\n",temp->stack->valor);
+			temp->stack = temp->stack->next;
 		}
-		geral = geral->next;
+		temp = temp->next;
 		i++;
 		printf("\n");
 	}
@@ -315,17 +316,107 @@ void passar_pra_cima(t_len *len,t_stack **stack)
 
 void send_media_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
 {
-	(void)stack_b;
-	(void)geral;
 	int i;
+	(void)geral;
+	(void)stack_b;
 
 	i = len->len_geral/2;
 	while(i < len->len_geral)
 	{
 		passar_pra_cima(len,stack_a);
-		//comecar_organizar(len,stack_a,stack_b,geral);
 		i++;
 	}
+}
+
+void	get_i_r(t_len len, int *i, int count)
+{
+	if (count == len.divisao_stack)
+		*i = len.elementos_stack
+			+ (len.ac - (len.elementos_stack * len.divisao_stack));
+	else
+		*i = len.elementos_stack;
+}
+
+void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
+{
+	int len_geral;
+	int i;
+	int num;
+	int i_len;
+	int op;
+	int teste;
+
+	i_len = 0;
+	op = 0;
+
+	num = (len->len_geral/2);
+	//if(!(len->len_geral%2))
+	num--;
+	while(num > 0)
+	{
+		num--;
+		geral = geral->next;
+	}
+	i = 0;
+	num = len->len_geral-(len->len_geral/2);
+	num -= 2;
+	len_geral = (num-1)*len->elementos_stack+len->ultimo_elementos;
+	(void)op;
+	(void)i_len;
+	(void)len_geral;
+
+	//
+	teste = 0;
+
+	while(num < len->len_geral)
+	{
+		if(i == 0)
+		{
+			if(num == len->len_geral-2)
+				i = len->ultimo_elementos;
+			else
+				i = len->elementos_stack;
+			num++;
+			geral = geral->next;
+		}
+		if(geral == NULL)
+			break;
+		if(verificar_valor_na_stack(geral->stack,(*stack_a)->valor))
+		{
+			ft_pb(stack_a,stack_b);
+			i--;
+			//len_geral--;
+		}
+		else
+		{
+			// if(op == 0)
+			// {
+			// 	i_len++;
+				ft_ra(stack_a);
+				teste++;
+			// }
+			// else if(op == 1)
+			// {
+			// 	i_len--;
+			// 	ft_rra(stack_a);
+			// }
+		}
+		// if(teste == 1000)
+		// {
+		// 	printar_struct(*stack_a);
+		// 	printar_struct(*stack_b);
+		// 	printar_geral(geral);
+		// 	break;
+		// }
+		// if(i_len >= len_geral)
+		// 	op = 1;
+		// else if(i_len <= 0)
+		// 	op = 0;
+	}
+	// ft_pb(stack_a,stack_b);
+	// printar_struct(*stack_a);
+	// printar_struct(*stack_b);
+	// printf("media %d %d\n",len->media,i);
 }
 
 void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
@@ -354,7 +445,11 @@ void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 	separar_por_grupo_small(l,s_a,&stack_b,geral);
 	send_media_big(l,s_a,&stack_b,geral);
 	//organizar_small(l,s_a,&stack_b,*g);
-	//separar_por_grupo_big(l,s_a,&stack_b,*g);
+	separar_por_grupo_big(l,s_a,&stack_b,*g);
+	// printar_struct(stack_b);
+	// printar_struct(*s_a);
+	//printar_geral(geral);
+	// printf("%d\n",l->media);
 	//organizar_big()
 	//mandar_big()
 	//mandar_small()
@@ -389,9 +484,9 @@ int	main(int ac, char **av)
 		dar_valor_a(&stack_a, av);
 		if(ac > 10 && verificar_organizado(stack_a) == 1)
 			biggest_stack(&stack_a, &replica, &geral, &len);
-		//else if ((ac >= 11 && ac <= 150)
-		//	&& verificar_organizado(stack_a) == 1)
-		//	organizar_10(&stack_a, &replica, &geral, &len);
+		// else if ((ac >= 11 && ac <= 150)
+		// 	&& verificar_organizado(stack_a) == 1)
+		// 	organizar_10(&stack_a, &replica, &geral, &len);
 		else if (ac > 6 && verificar_organizado(stack_a) == 1)
 			organizar_stack_5(&stack_a, &stack_b);
 		else if (ac >= 4 && verificar_organizado(stack_a) == 1)
