@@ -347,7 +347,7 @@ void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_gera
 	int teste;
 
 	i_len = 0;
-	op = 0;
+	op = 1;
 
 	num = (len->len_geral/2)-1;
 	//if((len->len_geral%2))
@@ -398,8 +398,11 @@ void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_gera
 			// if(op == 0)
 			// {
 			// 	i_len++;
+			if(op == 1)
 				ft_ra(stack_a);
-				teste++;
+			else if(op == 0)
+				ft_rra(stack_a);
+			teste++;
 			// }
 			// else if(op == 1)
 			// {
@@ -420,6 +423,10 @@ void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_gera
 		// 	op = 1;
 		// else if(i_len <= 0)
 		// 	op = 0;
+		if(valor_do_ultimo(*stack_a) <= len->media)
+			op = 1;
+		if((*stack_a)->valor <= len->media)
+			op = 0;
 	}
 	// ft_pb(stack_a,stack_b);
 	// printar_geral(geral);
