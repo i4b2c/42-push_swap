@@ -349,9 +349,9 @@ void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_gera
 	i_len = 0;
 	op = 0;
 
-	num = (len->len_geral/2);
-	//if(!(len->len_geral%2))
-	num--;
+	num = (len->len_geral/2)-1;
+	//if((len->len_geral%2))
+	//	num--;
 	while(num > 0)
 	{
 		num--;
@@ -359,8 +359,13 @@ void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_gera
 	}
 	i = 0;
 	num = len->len_geral-(len->len_geral/2);
-	num -= 2;
+	//num++;
+	//if(num % 2)
+		//num--;
 	len_geral = (num-1)*len->elementos_stack+len->ultimo_elementos;
+	// printf("%d %d\n",len_geral,num);
+	// printf("%d %d %d %d %d %d\n",len->divisao_stack,len->elementos_stack,len->len_geral,len->media,len->raiz,len->ultimo_elementos);
+	// exit(0);
 	(void)op;
 	(void)i_len;
 	(void)len_geral;
@@ -368,24 +373,25 @@ void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_gera
 	//
 	teste = 0;
 
-	while(num < len->len_geral)
+	while(geral != NULL)
 	{
-		if(i == 0)
+		if(i == 0 && geral->next != NULL)
 		{
-			if(num == len->len_geral-2)
+			if(geral->next->next == NULL)
 				i = len->ultimo_elementos;
 			else
 				i = len->elementos_stack;
 			num++;
+			// if(!geral->next)
+			// 	break;
 			geral = geral->next;
 		}
-		if(geral == NULL)
+		else if(i == 0 && geral->next == NULL)
 			break;
 		if(verificar_valor_na_stack(geral->stack,(*stack_a)->valor))
 		{
 			ft_pb(stack_a,stack_b);
 			i--;
-			//len_geral--;
 		}
 		else
 		{
@@ -401,6 +407,8 @@ void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_gera
 			// 	ft_rra(stack_a);
 			// }
 		}
+		// if(teste == 20000)
+		// 	break;
 		// if(teste == 1000)
 		// {
 		// 	printar_struct(*stack_a);
@@ -414,9 +422,16 @@ void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_gera
 		// 	op = 0;
 	}
 	// ft_pb(stack_a,stack_b);
+	// printar_geral(geral);
 	// printar_struct(*stack_a);
 	// printar_struct(*stack_b);
 	// printf("media %d %d\n",len->media,i);
+	// printf("%d %d %d %d\n",num,len->len_geral,len->elementos_stack,len->ultimo_elementos);
+	//printf("%d %d %d\n",i,len->elementos_stack,len->ultimo_elementos);
+	// while(valor_do_ultimo(*stack_a) > len->media)
+	// 	ft_rra(stack_a);
+	// while((*stack_a)->valor > len->media)
+	// 	ft_pb(stack_a,stack_b);
 }
 
 void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
