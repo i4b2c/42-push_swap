@@ -259,33 +259,6 @@ void organizar_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *ger
 		if(replica == NULL)
 			break;
 	}
-	//printar_struct(*stack_a);
-	//replicar_struct_abaixo_media(&replica,*stack_a);
-	// return ;
-	// while(replica != NULL)
-	// {
-	// 	break;
-	// 	if(replica->valor == (*stack_a)->valor)
-	// 	{
-	// 		remover_primeiro(&replica);
-	// 		ft_pb(stack_a,stack_b);
-	// 	}
-	// 	if(op == 0)
-	// 	{
-	// 		ft_ra(stack_a);
-	// 		i--;
-	// 	}
-	// 	else if(op == 1)
-	// 	{
-	// 		ft_rra(stack_a);
-	// 		i++;
-	// 	}
-	// 	if(i == 0)
-	// 		op = 1;
-	// 	else if(i == ((len->elementos_stack/2)*len->elementos_stack))
-	// 		op = 0;
-	// 	printf("%d\n",i);
-	// }
 }
 
 void	get_i_reverso(t_len len, int *i, int count)
@@ -337,7 +310,6 @@ void passar_pra_cima(t_len *len,t_stack **stack)
 		count = len->len_geral/2;
 	}
 	get_i(*len,&i,count);
-	//printf("count : %d e %d e %d\n",count,i,len->len_geral);
 	count++;
 	while(i > 0)
 	{
@@ -424,55 +396,6 @@ void mandar_small(t_len *len,t_stack **stack_a,t_stack **stack_b)
 	}
 }
 
-/*
-	t_stack *replica;
-	int len_ele;
-	int op;
-	int teste;
-
-	op = 1;
-	replica = NULL;
-	replicar_struct_abaixo_media(&replica,*stack_a);
-	organizar_replica(&replica);
-	len_ele = len->elementos_stack;
-	teste = len->elementos_stack;
-	while(stack_a != NULL)
-	{
-		if(len_ele == 0)
-		{
-			len_ele = len->elementos_stack;
-			teste = len->elementos_stack;
-			geral = geral->next;
-		}
-		if((*stack_a)->valor == replica->valor)
-		{
-			remover_primeiro(&replica);
-			teste--;
-			len_ele--;
-			ft_pb(stack_a,stack_b);
-		}
-		else
-		{
-			if(op == 1)
-			{
-				teste--;
-				ft_ra(stack_a);
-			}
-			else if(op == 0)
-			{
-				teste++;
-				ft_rra(stack_a);
-			}
-		}
-		if(teste >= len_ele)
-			op = 1;
-		else if(teste <= 0)
-			op = 0;
-		if(replica == NULL)
-			break;
-	}
-	*/
-
 void organizar_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
 {
 	(void)geral;
@@ -530,13 +453,9 @@ void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 	t_geral *geral;
 	t_stack *replica;
 
-	//replica = calloc(1,sizeof(t_stack));
-	geral = malloc(sizeof(t_geral));
-
 	replica = NULL;
 	geral = NULL;
 	stack_b = NULL;
-
 	replicar_struct(r, *s_a);
 	replicar_struct(&replica, *s_a);
 	organizar_replica(r);
@@ -554,27 +473,6 @@ void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 	mandar_small(l,s_a,&stack_b);
 	organizar_big(l,s_a,&stack_b,geral);
 	finalizar(l,s_a);
-	// printar_geral(geral);//maior -> menor
-	// printar_geral(*g);//menor -> maior
-	// organizar_menor(l,s_a,&stack_b,*g);
-	// printar_struct(stack_b);
-	// printar_struct(*s_a);
-	//printar_geral(geral);
-	// printf("%d\n",l->media);
-	//organizar_big()
-	//mandar_big()
-	//mandar_small()
-	// printar_geral(*g);
-	// printf("")
-	// printf("media %d, len %d,le\n",l->media,l->elementos_stack);
-	// printf("stack A -> (acima da media)\n");
-	// printar_struct(*s_a);
-	// printf("stack B -> (abaixo da media)\n");
-	// printar_struct(stack_b);
-
-
-	// dividir_b(s_a, &stack_b, g, *l);
-	// start_organizar(s_a, &stack_b, *l);
 }
 
 int	main(int ac, char **av)
