@@ -27,6 +27,19 @@ void	get_len(t_len *len, int ac)
 			- (len->elementos_stack * len->divisao_stack));
 }
 
+void	free_temp_geral(t_geral *geral)
+{
+	t_geral	*temp;
+
+	while (geral != NULL)
+	{
+		free(geral->stack);
+		temp = geral->next;
+		geral = geral->next;
+		free(temp);
+	}
+}
+
 void	get_geral_dividido(t_geral **geral, t_stack *stack, t_len len)
 {
 	int		count;

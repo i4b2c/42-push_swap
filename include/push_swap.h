@@ -6,7 +6,7 @@
 /*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/23 21:00:41 by marvin            #+#    #+#             */
-/*   Updated: 2023/06/20 11:38:24 by marvin           ###   ########.fr       */
+/*   Updated: 2023/06/25 14:41:31 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,6 @@ typedef struct d_geral
 	struct d_geral	*next;
 }	t_geral;
 
-typedef struct d_geral_r
-{
-	struct d_stack *stack;
-	struct d_geral_r *next;
-	struct d_geral_r *ante;
-}	t_geral_r;
-
 typedef struct d_len
 {
 	int	raiz;
@@ -41,9 +34,11 @@ typedef struct d_len
 	int	divisao_stack;
 	int	ultimo_elementos;
 	int	elementos_stack;
-	int media;
-	int len_geral;
+	int	media;
+	int	len_geral;
 }	t_len;
+
+void				free_geral(t_geral **geral);
 
 //verificar.c//
 int					verificar_organizado(t_stack *stack);

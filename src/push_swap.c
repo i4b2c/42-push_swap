@@ -342,6 +342,9 @@ void	biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 	enviar_small(l, s_a, &stack_b);
 	separar_por_grupo_big(l, s_a, &stack_b, *g);
 	start_organizar(s_a, &stack_b, *l);
+	free_todos(&replica, s_a, &geral);
+	free_while(r);
+	free_geral(g);
 }
 
 int	main(int ac, char **av)
@@ -362,7 +365,7 @@ int	main(int ac, char **av)
 		dar_valor_a(&stack_a, av);
 		if (ac > 10 && verificar_organizado(stack_a) == 1)
 			biggest_stack(&stack_a, &replica, &geral, &len);
-		else if (ac >= 6 && verificar_organizado(stack_a) == 1)
+		else if (ac >= 5 && verificar_organizado(stack_a) == 1)
 			organizar_stack_5(&stack_a, &stack_b);
 		else if (ac >= 4 && verificar_organizado(stack_a) == 1)
 			organizar_stack_3(&stack_a);
