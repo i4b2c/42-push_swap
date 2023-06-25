@@ -12,45 +12,6 @@
 
 #include "../include/push_swap.h"
 
-int	verificar_melhor_caminho(t_geral *temp, t_stack **stack_a, int op);
-
-void	ft_ra_no_print(t_stack **stack)
-{
-	t_stack	*new;
-	t_stack	*primeiro_no;
-
-	if (*stack == NULL || (*stack)->next == NULL)
-		return ;
-	new = *stack;
-	primeiro_no = new;
-	while (new->next != NULL)
-		new = new->next;
-	new->next = primeiro_no;
-	*stack = (*stack)->next;
-	primeiro_no->next = NULL;
-}
-
-void	ft_rra_no_print(t_stack **stack)
-{
-	t_stack	*new;
-	t_stack	*ultimo_no;
-	t_stack	*penultimo_no;
-
-	if (*stack == NULL || (*stack)->next == NULL)
-		return ;
-	new = *stack;
-	while (new->next != NULL)
-	{
-		if (new->next != NULL && new->next->next == NULL)
-			penultimo_no = new;
-		new = new->next;
-	}
-	ultimo_no = new;
-	penultimo_no->next = NULL;
-	ultimo_no->next = *stack;
-	*stack = ultimo_no;
-}
-
 int	verificar_ra(t_geral *temp, t_stack **stack_a)
 {
 	int		res;
@@ -100,18 +61,6 @@ int	get_len_struct(t_stack **stack)
 		temp = temp->next;
 	}
 	return (i);
-}
-
-void	replicar_stack(t_stack **temp, t_stack **stack)
-{
-	t_stack	*temp_stack;
-
-	temp_stack = *stack;
-	while (temp_stack != NULL)
-	{
-		adicionar_fim(temp, temp_stack->valor);
-		temp_stack = temp_stack->next;
-	}
 }
 
 int	verificar_melhor_caminho_ra(t_geral *geral, t_stack **stack)

@@ -67,3 +67,44 @@ void	get_geral_dividido(t_geral **geral, t_stack *stack, t_len len)
 	}
 	*geral = novo;
 }
+
+void	get_len_geral(t_geral *geral, t_len *len)
+{
+	int	i;
+
+	i = 0;
+	while (geral != NULL)
+	{
+		geral = geral->next;
+		i++;
+	}
+	len->len_geral = i;
+}
+
+void	get_geral_dividido_reverso(t_geral **geral, t_stack *stack, t_len len)
+{
+	int		count;
+	int		i;
+	t_geral	*novo;
+	t_geral	*atual;
+	t_geral	*temp;
+
+	get_geral_iniciar(&count, &novo, &atual);
+	while (count < len.divisao_stack)
+	{
+		criar_temp(&temp);
+		get_i_reverso(len, &i, count);
+		while (i > 0)
+		{
+			adicionar_fim(&temp->stack, stack->valor);
+			stack = stack->next;
+			i--;
+		}
+		if (novo == NULL)
+			colocar_inicio(&novo, &atual, temp);
+		else
+			continua_atual(&atual, temp);
+		count++;
+	}
+	*geral = novo;
+}
