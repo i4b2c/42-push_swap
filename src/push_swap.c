@@ -369,6 +369,11 @@ void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_gera
 		}
 		else if(i == 0 && geral->next == NULL)
 			break;
+		else if((*stack_a)->next == NULL)
+		{
+			ft_pb(stack_a,stack_b);
+			return ;
+		}
 		if(verificar_valor_na_stack(geral->stack,(*stack_a)->valor))
 		{
 			ft_pb(stack_a,stack_b);
@@ -398,8 +403,6 @@ void mandar_small(t_len *len,t_stack **stack_a,t_stack **stack_b)
 
 void organizar_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
 {
-	(void)geral;
-	(void)len;
 	int op;
 	int len_ele;
 	int teste;
@@ -447,6 +450,12 @@ void finalizar(t_len *len, t_stack **stack)
 		ft_rra(stack);
 }
 
+void enviar_small(t_len *len, t_stack **stack_a,t_stack **stack_b)
+{
+	while((*stack_a)->valor <= len->media)
+		ft_pb(stack_a,stack_b);
+}
+
 void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 {
 	t_stack	*stack_b;
@@ -467,12 +476,15 @@ void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 	get_media_len(l,*r);
 	send_media_small(l,s_a,&stack_b);
 	separar_por_grupo_small(l,s_a,&stack_b,geral);
+	enviar_small(l,s_a,&stack_b);
 	send_media_big(l,s_a,&stack_b,geral);
 	separar_por_grupo_big(l,s_a,&stack_b,*g);
-	organizar_small(l,s_a,&stack_b,*g);
-	mandar_small(l,s_a,&stack_b);
-	organizar_big(l,s_a,&stack_b,geral);
-	finalizar(l,s_a);
+	start_organizar(s_a, &stack_b, *l);
+	// printar_struct(*s_a);
+	// organizar_small(l,s_a,&stack_b,*g);
+	// mandar_small(l,s_a,&stack_b);
+	// organizar_big(l,s_a,&stack_b,geral);
+	// finalizar(l,s_a);
 }
 
 int	main(int ac, char **av)
