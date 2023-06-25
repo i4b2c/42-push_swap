@@ -503,12 +503,12 @@ int	main(int ac, char **av)
 	else if (len.ac >= 2)
 	{
 		dar_valor_a(&stack_a, av);
-		if(ac > 10 && verificar_organizado(stack_a) == 1)
+		if(ac > 150 && verificar_organizado(stack_a) == 1)
 			biggest_stack(&stack_a, &replica, &geral, &len);
-		// else if ((ac >= 11 && ac <= 150)
-		// 	&& verificar_organizado(stack_a) == 1)
-		// 	organizar_10(&stack_a, &replica, &geral, &len);
-		else if (ac > 6 && verificar_organizado(stack_a) == 1)
+		else if ((ac >= 11 && ac <= 150)
+			&& verificar_organizado(stack_a) == 1)
+			organizar_10(&stack_a, &replica, &geral, &len);
+		else if (ac >= 6 && verificar_organizado(stack_a) == 1)
 			organizar_stack_5(&stack_a, &stack_b);
 		else if (ac >= 4 && verificar_organizado(stack_a) == 1)
 			organizar_stack_3(&stack_a);
