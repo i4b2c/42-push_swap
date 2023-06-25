@@ -81,34 +81,6 @@ void get_len_geral(t_geral *geral,t_len *len)
 	len->len_geral = i;
 }
 
-void printar_geral(t_geral *geral)
-{
-	int i = 1;
-	t_geral *temp;
-
-	temp = geral;
-	while(temp != NULL)
-	{
-		printf("stack = %d\n",i);
-		while(temp->stack != NULL)
-		{
-			printf("valor %d\n",temp->stack->valor);
-			temp->stack = temp->stack->next;
-		}
-		temp = temp->next;
-		i++;
-		printf("\n");
-	}
-}
-
-int verificar_smalla(int valor,int len,t_geral *geral)
-{
-	(void)len;
-	if(verificar_valor_na_stack(geral->stack,valor) == 1)
-		return 1;
-	return 0;
-}
-
 int encontrar_media(t_stack *stack,int media)
 {
 	t_stack *temp;
@@ -148,17 +120,6 @@ void separar_por_grupo_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_ge
 		else
 			ft_rb(stack_b);
 	}
-}
-
-void printar_struct(t_stack *stack)
-{
-	printf("stack ->\n");
-	while(stack != NULL)
-	{
-		printf("valor : %d\n",stack->valor);
-		stack = stack->next;
-	}
-	printf("\n");
 }
 
 int	verificar_organizado_reverso(t_stack *stack)
@@ -201,66 +162,6 @@ void	organizar_replica_reverso(t_stack **stack)
 	}
 }
 
-void replicar_struct_abaixo_media(t_stack **replica,t_stack *stack)
-{
-	while(stack != NULL)
-	{
-		adicionar_fim(replica,stack->valor);
-		stack = stack->next;
-	}
-}
-
-void organizar_small(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
-{
-	//inves de usar uma replica posso usar a funcao para verificar o menor numero e mandar da stack , depois mudar isso!!
-	t_stack *replica;
-	int len_ele;
-	int op;
-	int teste;
-
-	op = 1;
-	replica = NULL;
-	replicar_struct_abaixo_media(&replica,*stack_a);
-	organizar_replica(&replica);
-	len_ele = len->elementos_stack;
-	teste = len->elementos_stack;
-	while(stack_a != NULL)
-	{
-		if(len_ele == 0)
-		{
-			len_ele = len->elementos_stack;
-			teste = len->elementos_stack;
-			geral = geral->next;
-		}
-		if((*stack_a)->valor == replica->valor)
-		{
-			remover_primeiro(&replica);
-			teste--;
-			len_ele--;
-			ft_pb(stack_a,stack_b);
-		}
-		else
-		{
-			if(op == 1)
-			{
-				teste--;
-				ft_ra(stack_a);
-			}
-			else if(op == 0)
-			{
-				teste++;
-				ft_rra(stack_a);
-			}
-		}
-		if(teste >= len_ele)
-			op = 1;
-		else if(teste <= 0)
-			op = 0;
-		if(replica == NULL)
-			break;
-	}
-}
-
 void	get_i_reverso(t_len len, int *i, int count)
 {
 	if (count == 0)
@@ -298,47 +199,44 @@ void	get_geral_dividido_reverso(t_geral **geral, t_stack *stack, t_len len)
 	*geral = novo;
 }
 
-void passar_pra_cima(t_len *len,t_stack **stack)
+t_geral *big_check_next(int *i, int *num, t_geral *geral, t_len *len)
 {
-	int i;
-	static int count;
-	static int ini = 0;
-
-	if(ini == 0)
+	if(*i == 0 && geral->next != NULL)
 	{
-		ini = 1;
-		count = len->len_geral/2;
+		if(geral->next->next == NULL)
+			*i = len->ultimo_elementos;
+		else
+			*i = len->elementos_stack;
+		(*num)++;
+		return (geral->next);
 	}
-	get_i(*len,&i,count);
-	count++;
-	while(i > 0)
-	{
-		ft_rra(stack);
-		i--;
-	}
+	return geral;
 }
 
-void send_media_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
+int big_check_end(int i, t_geral *geral, t_stack **stack_a, t_stack **stack_b)
 {
-	int i;
-	(void)geral;
-	(void)stack_b;
-
-	i = len->len_geral/2;
-	while(i < len->len_geral)
+	if(i == 0 && geral->next == NULL)
+		return (1);
+	else if((*stack_a)->next == NULL)
 	{
-		passar_pra_cima(len,stack_a);
-		i++;
+		ft_pb(stack_a,stack_b);
+		return (1);
 	}
+	return 0;
 }
 
-void	get_i_r(t_len len, int *i, int count)
+void big_pb(int *i,t_stack **stack_a, t_stack **stack_b)
 {
-	if (count == len.divisao_stack)
-		*i = len.elementos_stack
-			+ (len.ac - (len.elementos_stack * len.divisao_stack));
-	else
-		*i = len.elementos_stack;
+	ft_pb(stack_a,stack_b);
+	(*i)--;
+}
+
+void big_choose_ra_rra(int op, t_stack **stack_a)
+{
+	if(op == 1)
+		ft_ra(stack_a);
+	else if(op == 0)
+		ft_rra(stack_a);
 }
 
 void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
@@ -348,44 +246,20 @@ void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_gera
 	int op;
 
 	op = 1;
-	num = (len->len_geral/2)-1;
-	while(num > 0)
-	{
-		num--;
-		geral = geral->next;
-	}
 	i = 0;
+	num = (len->len_geral/2);
+	while(num-- > 1)
+		geral = geral->next;
 	num = len->len_geral-(len->len_geral/2);
 	while(geral != NULL)
 	{
-		if(i == 0 && geral->next != NULL)
-		{
-			if(geral->next->next == NULL)
-				i = len->ultimo_elementos;
-			else
-				i = len->elementos_stack;
-			num++;
-			geral = geral->next;
-		}
-		else if(i == 0 && geral->next == NULL)
+		geral = big_check_next(&i,&num,geral,len);
+		if(big_check_end(i,geral,stack_a,stack_b))
 			break;
-		else if((*stack_a)->next == NULL)
-		{
-			ft_pb(stack_a,stack_b);
-			return ;
-		}
 		if(verificar_valor_na_stack(geral->stack,(*stack_a)->valor))
-		{
-			ft_pb(stack_a,stack_b);
-			i--;
-		}
+			big_pb(&i,stack_a,stack_b);
 		else
-		{
-			if(op == 1)
-				ft_ra(stack_a);
-			else if(op == 0)
-				ft_rra(stack_a);
-		}
+			big_choose_ra_rra(op, stack_a);
 		if(valor_do_ultimo(*stack_a) <= len->media)
 			op = 1;
 		if((*stack_a)->valor <= len->media)
@@ -393,61 +267,56 @@ void separar_por_grupo_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_gera
 	}
 }
 
-void mandar_small(t_len *len,t_stack **stack_a,t_stack **stack_b)
+void	escolher_opcao(int *op, int *cont, t_stack **stack_b)
 {
-	while((*stack_b)->valor <= len->media)
+	if (*op == 1)
 	{
-		ft_pa(stack_b,stack_a);
+		(*cont)--;
+		ft_rb(stack_b);
 	}
+	else if (*op == 0)
+	{
+		(*cont)++;
+		ft_rrb(stack_b);
+	}
+}
+
+void big_pa(int *cont, int *len_ele, t_stack **stack_a, t_stack **stack_b)
+{
+	(*cont)--;
+	(*len_ele)--;
+	ft_pa(stack_b,stack_a);
+}
+
+t_geral *big_reset(t_len *len, int *cont, int *len_ele,t_geral *geral)
+{
+	(*len_ele) = len->elementos_stack;
+	(*cont) = len->elementos_stack;
+	return geral->next;
 }
 
 void organizar_big(t_len *len,t_stack **stack_a,t_stack **stack_b,t_geral *geral)
 {
 	int op;
 	int len_ele;
-	int teste;
+	int cont;
 
-	teste = len->ultimo_elementos;
+	cont = len->ultimo_elementos;
 	op = 1;
 	len_ele = len->ultimo_elementos;
 	while(*stack_b != NULL)
 	{
 		if(len_ele == 0)
-		{
-			len_ele = len->elementos_stack;
-			teste = len->elementos_stack;
-			geral = geral->next;
-		}
+			geral = big_reset(len,&cont,&len_ele,geral);
 		if(verificar_valores_max(*stack_b))
-		{
-			teste--;
-			len_ele--;
-			ft_pa(stack_b,stack_a);
-		}
+			big_pa(&cont,&len_ele,stack_a,stack_b);
 		else
-		{
-			if(op == 1)
-			{
-				teste--;
-				ft_rb(stack_b);
-			}
-			else if(op == 0)
-			{
-				teste++;
-				ft_rrb(stack_b);
-			}
-		}
-		if(teste >= len_ele)
+			escolher_opcao(&op,&cont,stack_b);
+		if(cont >= len_ele)
 			op = 1;
-		else if(teste <= 0)
+		else if(cont <= 0)
 			op = 0;
 	}
-}
-
-void finalizar(t_len *len, t_stack **stack)
-{
-	while(valor_do_ultimo(*stack) <= len->media)
-		ft_rra(stack);
 }
 
 void enviar_small(t_len *len, t_stack **stack_a,t_stack **stack_b)
@@ -477,14 +346,8 @@ void biggest_stack(t_stack **s_a, t_stack **r, t_geral **g, t_len *l)
 	send_media_small(l,s_a,&stack_b);
 	separar_por_grupo_small(l,s_a,&stack_b,geral);
 	enviar_small(l,s_a,&stack_b);
-	send_media_big(l,s_a,&stack_b,geral);
 	separar_por_grupo_big(l,s_a,&stack_b,*g);
 	start_organizar(s_a, &stack_b, *l);
-	// printar_struct(*s_a);
-	// organizar_small(l,s_a,&stack_b,*g);
-	// mandar_small(l,s_a,&stack_b);
-	// organizar_big(l,s_a,&stack_b,geral);
-	// finalizar(l,s_a);
 }
 
 int	main(int ac, char **av)
@@ -503,11 +366,11 @@ int	main(int ac, char **av)
 	else if (len.ac >= 2)
 	{
 		dar_valor_a(&stack_a, av);
-		if(ac > 150 && verificar_organizado(stack_a) == 1)
+		if(ac > 10 && verificar_organizado(stack_a) == 1)
 			biggest_stack(&stack_a, &replica, &geral, &len);
-		else if ((ac >= 11 && ac <= 150)
-			&& verificar_organizado(stack_a) == 1)
-			organizar_10(&stack_a, &replica, &geral, &len);
+		// else if ((ac >= 11 && ac <= 150)
+		// 	&& verificar_organizado(stack_a) == 1)
+		// 	organizar_10(&stack_a, &replica, &geral, &len);
 		else if (ac >= 6 && verificar_organizado(stack_a) == 1)
 			organizar_stack_5(&stack_a, &stack_b);
 		else if (ac >= 4 && verificar_organizado(stack_a) == 1)
